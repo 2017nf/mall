@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.yanbao</groupId>
-		<artifactId>hongbao</artifactId>
+		<artifactId>mall</artifactId>
 		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>mall-core</artifactId>
