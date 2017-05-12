@@ -17,6 +17,10 @@ public class MallOrder extends BaseModel {
      */
     private Integer orderType;
     /**
+     * 支付类型
+     */
+    private Integer payWay;
+    /**
      * 用户ID
      */
     private String userId;
@@ -77,6 +81,14 @@ public class MallOrder extends BaseModel {
      */
     private Integer num;
 
+
+    public Integer getPayWay() {
+        return payWay;
+    }
+
+    public void setPayWay(Integer payWay) {
+        this.payWay = payWay;
+    }
 
     public String getUserId() {
         return userId;

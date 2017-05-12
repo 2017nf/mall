@@ -3,8 +3,8 @@ package com.mall.vo;
 import java.io.Serializable;
 
 /**
- * 直接购买 vo
- *
+ * 
+ * @author zhuzh
  * @date 2017年2月4日
  */
 public class PurchaseVo implements Serializable {

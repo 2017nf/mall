@@ -32,18 +32,18 @@ public class GenerateOrder {
 
 	/**
 	 * 预付单生成
-	 * 
+	 *
 	 * @param money
 	 * @return
 	 */
-	public Map<String, String> generate(String money, String ip, String attach,String outTradeNo) {
+	public Map<String, String> generate(String money, String ip, String attach,String outTradeNo,String notifyUrl) {
 //		String outTradeNo = getOutTradeNo();
 		logger.debug("**********outTradeNo*********************");
 
 		logger.debug(outTradeNo);
 
 		logger.debug("**********info*********************");
-		String info = buildOrderInfo(money, ip, outTradeNo, attach);
+		String info = buildOrderInfo(money, ip, outTradeNo, attach,notifyUrl);
 		logger.debug(info);
 		ResponseInfo resp = post(info);
 		if (resp==null) {
@@ -56,47 +56,48 @@ public class GenerateOrder {
 		return map;
 	}
 
-	/**
-	 * 组装订单信息
-	 *
-	 * @return
-	 */
-	public String buildOrderInfo(String money, String ip, String outTradeNo, String attach) {
-		// 生成订单对象
-		RequestInfo unifiedOrderRequest = new RequestInfo();
-		unifiedOrderRequest.setAttach(attach);
-		unifiedOrderRequest.setAppid(_appid);// 公众账号ID
-		unifiedOrderRequest.setMch_id(_MchId);// 商户号
-		unifiedOrderRequest.setNonce_str(UUID.randomUUID().toString().replace("-", ""));// 随机字符串
 
-		unifiedOrderRequest.setBody(_body);
-		// 商品描述
-		unifiedOrderRequest.setOut_trade_no(outTradeNo);// 商户订单号
-		unifiedOrderRequest.setTotal_fee(money); // 金额需要扩大100倍:1代表支付时是0.01
-		unifiedOrderRequest.setSpbill_create_ip(ip);// 终端IP
-		unifiedOrderRequest.setNotify_url(_NotifyUrl);// 通知地址
-		unifiedOrderRequest.setTrade_type("APP");// JSAPI--公众号支付、NATIVE--原生扫码支付、APP--app支付
-		SortedMap<String, String> packageParams = new TreeMap<String, String>();
-		packageParams.put("appid", unifiedOrderRequest.getAppid());
-		packageParams.put("body", unifiedOrderRequest.getBody());
-		packageParams.put("mch_id", unifiedOrderRequest.getMch_id());
-		packageParams.put("nonce_str", unifiedOrderRequest.getNonce_str());
-		packageParams.put("notify_url", unifiedOrderRequest.getNotify_url());
-		packageParams.put("out_trade_no", unifiedOrderRequest.getOut_trade_no());
-		packageParams.put("attach", unifiedOrderRequest.getAttach());
-		packageParams.put("spbill_create_ip", unifiedOrderRequest.getSpbill_create_ip());
-		packageParams.put("trade_type", unifiedOrderRequest.getTrade_type());
-		packageParams.put("total_fee", unifiedOrderRequest.getTotal_fee());
-		unifiedOrderRequest.setSign(createSign(packageParams));// 签名
-		// 将订单对象转为xml格式
-		XStream xStream = new XStream(new DomDriver("utf-8"));
-		xStream.alias("xml", RequestInfo.class);// 根元素名需要是xml
-		return xStream.toXML(unifiedOrderRequest).replace("__", "_");
-	}
+    /**
+     * 组装订单信息
+     *
+     * @return
+     */
+    public String buildOrderInfo(String money, String ip, String outTradeNo, String attach,String notifyUrl) {
+        // 生成订单对象
+        RequestInfo unifiedOrderRequest = new RequestInfo();
+        unifiedOrderRequest.setAttach(attach);
+        unifiedOrderRequest.setAppid(_appid);// 公众账号ID
+        unifiedOrderRequest.setMch_id(_MchId);// 商户号
+        unifiedOrderRequest.setNonce_str(UUID.randomUUID().toString().replace("-", ""));// 随机字符串
+
+        unifiedOrderRequest.setBody(_body);
+        // 商品描述
+        unifiedOrderRequest.setOut_trade_no(outTradeNo);// 商户订单号
+        unifiedOrderRequest.setTotal_fee(money); // 金额需要扩大100倍:1代表支付时是0.01
+        unifiedOrderRequest.setSpbill_create_ip(ip);// 终端IP
+        unifiedOrderRequest.setNotify_url(notifyUrl);// 通知地址
+        unifiedOrderRequest.setTrade_type("APP");// JSAPI--公众号支付、NATIVE--原生扫码支付、APP--app支付
+        SortedMap<String, String> packageParams = new TreeMap<String, String>();
+        packageParams.put("appid", unifiedOrderRequest.getAppid());
+        packageParams.put("body", unifiedOrderRequest.getBody());
+        packageParams.put("mch_id", unifiedOrderRequest.getMch_id());
+        packageParams.put("nonce_str", unifiedOrderRequest.getNonce_str());
+        packageParams.put("notify_url", unifiedOrderRequest.getNotify_url());
+        packageParams.put("out_trade_no", unifiedOrderRequest.getOut_trade_no());
+        packageParams.put("attach", unifiedOrderRequest.getAttach());
+        packageParams.put("spbill_create_ip", unifiedOrderRequest.getSpbill_create_ip());
+        packageParams.put("trade_type", unifiedOrderRequest.getTrade_type());
+        packageParams.put("total_fee", unifiedOrderRequest.getTotal_fee());
+        unifiedOrderRequest.setSign(createSign(packageParams));// 签名
+        // 将订单对象转为xml格式
+        XStream xStream = new XStream(new DomDriver("utf-8"));
+        xStream.alias("xml", RequestInfo.class);// 根元素名需要是xml
+        return xStream.toXML(unifiedOrderRequest).replace("__", "_");
+    }
 
 
 
-	/**
+    /**
 	 * 组装查询订单信息
 	 *
 	 * @return String
@@ -139,7 +140,7 @@ public class GenerateOrder {
 
 	/**
 	 * 提交
-	 * 
+	 *
 	 * @param orderInfo
 	 * @return
 	 */
@@ -193,7 +194,7 @@ public class GenerateOrder {
 
 	/**
 	 * 提交
-	 * 
+	 *
 	 * @param resp
 	 * @return
 	 */
@@ -292,7 +293,7 @@ public class GenerateOrder {
 
 	/*
 	 * 要求外部订单号必须唯一。
-	 * 
+	 *
 	 * @return
 	 */
 	private static String getOutTradeNo() {

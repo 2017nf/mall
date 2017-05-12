@@ -50,6 +50,18 @@ public class MallOrderDetail extends BaseModel {
      * 商品数量
      */
     private Integer num;
+    /**
+     * 商家原价
+     */
+    private Double originalPrice;
+
+    public Double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(Double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
 
     public String getOrderId() {
         return orderId;

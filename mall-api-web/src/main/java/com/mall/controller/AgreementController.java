@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/agreement")
 public class AgreementController {
-
     @Autowired
     private BaseAgreementService agreementService;
 

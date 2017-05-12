@@ -1,22 +1,15 @@
 package com.mall.constant;
 
 /**
- * 订单枚举类
+ * 订单类型枚举类 <br/>
+ * 
+ * @author zhuzh
  * @date 2016年11月15日
  */
 public enum OrderType {
+	PURCHASE(1, "直接购买"),
 
-	/** 待处理 */
-	PENDING(0, "待处理"),
-
-	/** 已出售 */
-	SALED(1, "已出售"),
-
-	/** 已购买，待发货 */
-	BUYED(2, "待发货"),
-
-	/** 已发货 */
-	DELIVERED(3, "已发货");
+	CARTPAY(2, "购物车购买");
 
 	private final Integer code;
 

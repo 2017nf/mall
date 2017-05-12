@@ -6,11 +6,11 @@ package com.mall.constant;
  */
 public enum PayType {
 
-	PURCHASE(1, "直接购买"),
+	ALIPAY(1, "直接购买"),
 
-	EXCHANGEEP(2, "微信支付"),
+	WEIXINPAY(2, "微信支付"),
 
-	WEIXIN(3, "支付宝支付");
+	BALANCEPAY(3, "会员卡支付");
 
 
 	private final Integer code;
