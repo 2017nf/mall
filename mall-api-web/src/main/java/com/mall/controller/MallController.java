@@ -35,6 +35,8 @@ public class MallController {
     private MallStoreService mallService;
     @Autowired
     private BaseFileService fileService;
+    @Autowired
+    private MallShoppingCardService shoppingCardService;
 
     /**
      * 商品分类
