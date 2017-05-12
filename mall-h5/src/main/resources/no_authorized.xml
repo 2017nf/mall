@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<no_authorized>
+	<!--
+	<url>/h5/resources</url>
+	<url>/h5/MP_verify</url>
+	<url>/h5/MP_verify_8bTQZMSYGSDftepZ.txt</url>
+	<url>/h5/share/storeInfo</url>
+	<url>/h5/share/goodList</url>
+	<url>/h5/share/goodsInfo</url>
+	<url>/h5/user/login/weixin</url>
+	<url>/h5/user/test</url>
+	<url>/h5/user/callback</url>
+	<url>/h5/user/transition</url>
+	-->
+
+	<url>/resources</url>
+	<url>/MP_verify</url>
+	<url>/MP_verify_8bTQZMSYGSDftepZ.txt</url>
+	<url>/share/storeInfo</url>
+	<url>/share/goodList</url>
+	<url>/share/goodsInfo</url>
+	<url>/user/login/weixin</url>
+	<url>/user/test</url>
+	<url>/user/callback</url>
+	<url>/user/transition</url>
+	<url>/wallet/share/wxCallback</url>
+	<url>/wallet/query</url>
+	<url>/share/call</url>
+</no_authorized>
+
+
+
+

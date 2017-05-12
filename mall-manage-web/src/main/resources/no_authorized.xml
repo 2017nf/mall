@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 登录接口，免登录验证的接口 -->
+<no_authorized>
+	<url>/manage/admin/login</url>
+	<url>/manage/picCode</url>
+</no_authorized>

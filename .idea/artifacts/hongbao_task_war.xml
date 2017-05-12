@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="hongbao-task:war">
+    <output-path>$PROJECT_DIR$/hongbao-task/target</output-path>
+    <root id="archive" name="manag323e.war">
+      <element id="artifact" artifact-name="hongbao-task:war exploded" />
+    </root>
+  </artifact>
+</component>
