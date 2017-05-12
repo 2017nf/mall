@@ -10,6 +10,9 @@
 		<module>mall-model</module>
 		<module>mall-api-service</module>
 		<module>mall-api-web</module>
+
+
+	 	<module>mall-manage-service</module>
 		<module>mall-manage-service</module>
 		<module>mall-manage-web</module>
 		<!--	<module>mall-test-web</module>
