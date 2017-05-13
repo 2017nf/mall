@@ -2,7 +2,6 @@ package com.mall.service.impl;
 
 import com.mall.core.dao.CommonDao;
 import com.mall.core.service.impl.CommonServiceImpl;
-import com.mall.mapper.MallGoodsGoodsMapper;
 import com.mall.model.MallGoods;
 import com.mall.service.MallGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;

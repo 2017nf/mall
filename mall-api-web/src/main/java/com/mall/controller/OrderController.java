@@ -184,8 +184,11 @@ public class OrderController {
 
         MallGoods goods = null;
         if (order.getOrderType().intValue() == OrderType.CARTPAY.getCode().intValue()) {
-            //TODO(已完善，创建一个实体类)
+            //TODO(已完善)
             MallOrderDetail mallOrderDetail = new MallOrderDetail();
+            mallOrderDetail.setOrderNo(orderNo);
+            mallOrderDetail.setOrderId(order.getId());
+            //根据关联订单id和订单号查询订单列表
             List<MallOrderDetail> list = orderDetailService.readList(mallOrderDetail, 1, 10, 1000);
             if(list == null && list.size() <= 0){
                 return new JsonResult(4,"购物车中没有商品");

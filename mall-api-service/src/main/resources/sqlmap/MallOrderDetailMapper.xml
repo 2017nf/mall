@@ -22,6 +22,7 @@
             1=1
             <if test="model.id != null">AND id= #{model.id}</if>
             <if test="model.orderNo != null">AND orderNo= #{model.orderNo}</if>
+            <if test="model.orderId != null">AND orderId= #{model.orderId}</if>
             <if test="model.userId != null">AND userId= #{model.userId}</if>
             <if test="model.storeId != null">AND storeId= #{model.storeId}</if>
             <if test="model.goodsId != null">AND goodsId= #{model.goodsId}</if>
