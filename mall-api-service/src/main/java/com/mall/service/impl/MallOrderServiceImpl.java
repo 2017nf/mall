@@ -38,8 +38,8 @@ public class MallOrderServiceImpl extends CommonServiceImpl<MallOrder> implement
 
 	@Autowired
 	private MallGoodsService goodsService;
-	@Autowired
-	private MallOrderService orderService;
+//	@Autowired
+//	private MallOrderService orderService;
 	@Autowired
 	private MallOrderDetailService mallOrderDetailService;
 	@Autowired
@@ -133,7 +133,7 @@ public class MallOrderServiceImpl extends CommonServiceImpl<MallOrder> implement
 		}
 
 		//新增订单
-		orderService.create(order);
+		this.create(order);
 		return order;
 	}
 
