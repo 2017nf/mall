@@ -1,25 +1,40 @@
 package com.mall.controller;
 
-import org.apache.commons.lang.time.DateFormatUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import com.mall.core.page.JsonResult;
+import com.mall.util.PropertiesUtil;
+import com.mall.util.QiNiuUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Created by summer on 2016-12-12:12:15;
  */
 @Controller
 @RequestMapping("/upload")
-public class UploadController{
+public class UploadController {
+
+    /***
+     * 获取上传文件的token
+     */
+    @RequestMapping("/getToken")
+    @ResponseBody
+    public JsonResult pageSysManUser(HttpServletRequest request, HttpServletResponse response, String folderName) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("token", QiNiuUtil.getToken(folderName));
+        if (StringUtils.isEmpty(folderName)){
+            map.put("domain", PropertiesUtil.getDomain("prefix"));
+        }else {
+            map.put("domain", PropertiesUtil.getDomain(folderName));
+        }
+        return new JsonResult(map);
+    }
 
 /*    private static Map<String, String> contentTypeMap = new HashMap<>();
 

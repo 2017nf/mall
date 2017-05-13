@@ -5,6 +5,7 @@
 	<url>/mall/user/wxlogin</url>
 	<url>/mall/sortlist</url>
 	<url>/mall/goodslist</url>
+	<url>/mall/upload/getToken</url>
 	<url>/index</url>
 	<!-- 静态资源-->
 	<url>/resources</url>
