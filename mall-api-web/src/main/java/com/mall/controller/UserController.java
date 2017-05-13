@@ -52,7 +52,7 @@ public class UserController {
         if (StringUtils.isBlank(vo.getUnionId())) {
             return new JsonResult(-1, "unionId不能为空");
         }
-        BaseUser user = userService.readById(vo.getOpenId());
+        BaseUser user = userService.readByUnionId(vo.getUnionId());
         if (null == user) {
             String nickName = vo.getNickName();
             if (StringUtils.isNotBlank(nickName)) {
@@ -61,14 +61,10 @@ public class UserController {
             user = new BaseUser();
             user.setNickName(nickName);
             user.setId(UUIDUtil.getUUID());
-            user.setAddr("");
-            user.setCity("");
             user.setOpenId(vo.getOpenId());
             user.setUnionId(vo.getUnionId());
             user.setLoginTime(new Date());
             user.setSex(vo.getSex());
-            user.setProvince("");
-            user.setPhone("");
             user.setHeadImgUrl(vo.getHeadImgUrl());
             user.setSalt(System.currentTimeMillis() + "");
             userService.create(user);
@@ -81,7 +77,6 @@ public class UserController {
         // 登录
         String token = TokenUtil.generateToken(user.getId(), user.getNickName());
         Strings.setEx(RedisKey.TOKEN_API.getKey() + user.getId(), RedisKey.TOKEN_API.getSeconds(), token);
-        Sets.sadd(RedisKey.ALL_TOKENS.getKey(), token);
         if (logger.isInfoEnabled()) {
             logger.info(String.format("user login[%s]", TokenUtil.getTokenObject(token)));
         }

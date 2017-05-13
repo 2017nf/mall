@@ -53,6 +53,8 @@ public class BaseUser extends BaseModel {
 
     private String addr;
 
+    private Double amount;
+
     public Integer getUid() {
         return uid;
     }
@@ -155,5 +157,13 @@ public class BaseUser extends BaseModel {
 
     public void setCounty(String county) {
         this.county = county;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 }
