@@ -1,4 +1,4 @@
-package com.mall.model;
+package com.mall.vo;
 
 import com.mall.common.BaseModel;
 
@@ -9,21 +9,13 @@ import java.util.Date;
  *
  * @date 2016年12月7日
  */
-public class BaseUser extends BaseModel {
+public class LoginUserVo {
 
-    private static final long serialVersionUID = -2932280543213916052L;
-    /**
-     * UID
-     */
-    private Integer uid;
     /**
      * 微信 unionId
      */
     private String unionId;
-    /**
-     * 手机号
-     */
-    private String phone;
+
     /**
      * 昵称
      */
@@ -36,30 +28,15 @@ public class BaseUser extends BaseModel {
      * 头像地址
      */
     private String headImgUrl;
-    /**
-     * 盐
-     */
-    private String salt;
-    /***登录时间**/
-    private Date loginTime;
+
     /***微信openid**/
     private String openId;
 
     private String province;
 
-    private String county;
-
     private String city;
 
     private String addr;
-
-    public Integer getUid() {
-        return uid;
-    }
-
-    public void setUid(Integer uid) {
-        this.uid = uid;
-    }
 
     public String getUnionId() {
         return unionId;
@@ -67,14 +44,6 @@ public class BaseUser extends BaseModel {
 
     public void setUnionId(String unionId) {
         this.unionId = unionId;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getNickName() {
@@ -99,22 +68,6 @@ public class BaseUser extends BaseModel {
 
     public void setHeadImgUrl(String headImgUrl) {
         this.headImgUrl = headImgUrl;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
-    public Date getLoginTime() {
-        return loginTime;
-    }
-
-    public void setLoginTime(Date loginTime) {
-        this.loginTime = loginTime;
     }
 
     public String getOpenId() {
@@ -147,13 +100,5 @@ public class BaseUser extends BaseModel {
 
     public void setAddr(String addr) {
         this.addr = addr;
-    }
-
-    public String getCounty() {
-        return county;
-    }
-
-    public void setCounty(String county) {
-        this.county = county;
     }
 }

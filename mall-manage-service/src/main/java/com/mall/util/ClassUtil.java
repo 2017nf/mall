@@ -21,11 +21,9 @@ public class ClassUtil {
             }
         } catch (ClassNotFoundException e) {
             System.out.println("not find class");
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (IOException e) {
             System.out.println("io exception");
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

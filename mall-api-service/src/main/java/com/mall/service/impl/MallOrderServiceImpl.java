@@ -30,12 +30,10 @@ import java.util.List;
  */
 @Service
 public class MallOrderServiceImpl extends CommonServiceImpl<MallOrder> implements MallOrderService {
-	@Autowired
-	private MallOrderMapper mallOrderDao;
-
-
 	private static final Logger logger = LoggerFactory.getLogger(MallOrderServiceImpl.class);
 
+	@Autowired
+	private MallOrderMapper mallOrderMapper;
 	@Autowired
 	private MallGoodsService goodsService;
 //	@Autowired
@@ -48,7 +46,7 @@ public class MallOrderServiceImpl extends CommonServiceImpl<MallOrder> implement
 	private MallRecordService recordService;
 	@Override
 	protected CommonDao<MallOrder> getDao() {
-		return mallOrderDao;
+		return mallOrderMapper;
 	}
 
 	@Override
@@ -148,6 +146,15 @@ public class MallOrderServiceImpl extends CommonServiceImpl<MallOrder> implement
 	@Override
 	public Boolean purchaseCallBack(BaseUser user, String orderNo) throws Exception {
 		return  false;
+	}
+
+	@Override
+	public MallOrder getByOrderNo(String orderNo, String userId) throws Exception {
+
+		if (StringUtils.isBlank(orderNo) || StringUtils.isBlank(userId)) {
+			return null;
+		}
+		return mallOrderMapper.getByOrderNo(orderNo, userId);
 	}
 
 }

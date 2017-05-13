@@ -8,10 +8,8 @@ import com.mall.model.BaseUser;
 import com.mall.redis.Sets;
 import com.mall.redis.Strings;
 import com.mall.service.BaseUserService;
-import com.mall.util.BrowserUtil;
-import com.mall.util.EmojiUtil;
-import com.mall.util.TokenUtil;
-import com.mall.util.WechatApiUtil;
+import com.mall.util.*;
+import com.mall.vo.LoginUserVo;
 import com.mall.vo.UserVo;
 import net.sf.json.JSONObject;
 import org.apache.commons.beanutils.BeanUtils;
@@ -30,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/user")
@@ -49,17 +48,30 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/wxlogin", method = RequestMethod.POST)
-    public JsonResult loginByWeixin(HttpServletRequest request, @RequestBody BaseUser loginUser) throws Exception {
-        if (StringUtils.isBlank(loginUser.getUnionId())) {
-            return new JsonResult(-1, "openid不能为空");
+    public JsonResult loginByWeixin(HttpServletRequest request, @RequestBody LoginUserVo vo) throws Exception {
+        if (StringUtils.isBlank(vo.getUnionId())) {
+            return new JsonResult(-1, "unionId不能为空");
         }
-        BaseUser user = userService.readById(loginUser.getId());
+        BaseUser user = userService.readById(vo.getOpenId());
         if (null == user) {
-            String nickName = loginUser.getNickName();
-            if (StringUtils.isNotBlank(nickName))
+            String nickName = vo.getNickName();
+            if (StringUtils.isNotBlank(nickName)) {
                 nickName = nickName.replaceAll("[^\u0000-\uFFFF]", "?"); // 过滤非UTF-8字符集,用"?"代替，如Emoji表情
-            loginUser.setNickName(nickName);
-            userService.create(loginUser);
+            }
+            user = new BaseUser();
+            user.setNickName(nickName);
+            user.setId(UUIDUtil.getUUID());
+            user.setAddr("");
+            user.setCity("");
+            user.setOpenId(vo.getOpenId());
+            user.setUnionId(vo.getUnionId());
+            user.setLoginTime(new Date());
+            user.setSex(vo.getSex());
+            user.setProvince("");
+            user.setPhone("");
+            user.setHeadImgUrl(vo.getHeadImgUrl());
+            user.setSalt(System.currentTimeMillis() + "");
+            userService.create(user);
         }
 
         if (user.getStatus() == StatusType.FALSE.getCode()) {
@@ -73,10 +85,10 @@ public class UserController {
         if (logger.isInfoEnabled()) {
             logger.info(String.format("user login[%s]", TokenUtil.getTokenObject(token)));
         }
-        UserVo vo = new UserVo();
+        UserVo userVo = new UserVo();
         BeanUtils.copyProperties(vo, user);
-        vo.setToken(token);
-        setUserVo(user, vo);
+        userVo.setToken(token);
+        setUserVo(user, userVo);
         return new JsonResult(vo);
     }
 

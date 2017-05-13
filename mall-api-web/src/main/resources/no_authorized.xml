@@ -2,6 +2,7 @@
 
 <!-- 幸运积分项目，免登录验证的接口 -->
 <no_authorized>
+	<url>/mall/user/wxlogin</url>
 	<url>/mall/sortlist</url>
 	<url>/mall/goodslist</url>
 	<url>/index</url>

@@ -164,9 +164,9 @@ public class OrderController {
             return new JsonResult(ResultCode.ERROR.getCode(), "orderNo不能为空");
         }
         String orderNo = vo.getOrderNo();
-        //TODO
-        MallOrder order = null;
-//        MallOrder order = orderService.getByOrderNo(orderNo, user.getId());
+        //TODO(已完善)
+       // 根据订单号查询订单
+        MallOrder order = orderService.getByOrderNo(orderNo, user.getId());
         if (order == null) {
             return new JsonResult(ResultCode.ERROR.getCode(), "订单不存在");
         }
@@ -184,10 +184,14 @@ public class OrderController {
 
         MallGoods goods = null;
         if (order.getOrderType().intValue() == OrderType.CARTPAY.getCode().intValue()) {
-            //TODO
-            List<MallOrderDetail> list = orderDetailService.readList(null, 1, 10, 1000);
+            //TODO(已完善，创建一个实体类)
+            MallOrderDetail mallOrderDetail = new MallOrderDetail();
+            List<MallOrderDetail> list = orderDetailService.readList(mallOrderDetail, 1, 10, 1000);
+            if(list == null && list.size() <= 0){
+                return new JsonResult(4,"购物车中没有商品");
+            }
             for (MallOrderDetail orderDetail : list) {
-                //TODO
+                //TODO(未完善)
                 goods = goodsService.readById(orderDetail.getGoodsId());
                 if (goods == null || StatusType.FALSE.getCode() == goods.getStatus()) {
                     return new JsonResult(2, goods.getName() + "已下架,请重新下订单");
@@ -206,7 +210,6 @@ public class OrderController {
                 return new JsonResult(3, goods.getName() + "库存不足,请重新下订单");
             }
         }
-
 
         //返回参数给前端
         Map<Object, Object> map = new HashedMap();

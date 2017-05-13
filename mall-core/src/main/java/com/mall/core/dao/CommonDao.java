@@ -25,5 +25,5 @@ public interface CommonDao<D extends BaseModel> {
     void updateById(@Param("id") String id, @Param("model") D model);
 
     // D delete操作的原则是先根据条件查询到记录，再根据记录的ID删除
-    void deleteById(String id);
+    void deleteById(@Param("id")  String id);
 }

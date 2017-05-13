@@ -54,7 +54,7 @@ public class ApiActionInterceptor extends HandlerInterceptorAdapter {
         String uri = request.getRequestURI();
         // 过滤配置列表中的URL
         for (String uriKey : noAuthorized) {
-            if (uri.indexOf(uriKey) > 0) {
+            if (uri.indexOf(uriKey) >=0) {
                 return true;
             }
         }

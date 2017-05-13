@@ -15,4 +15,6 @@ public interface MallOrderService extends CommonService<MallOrder> {
     public MallOrder createOrder(BaseUser user, List<MallGoods> goodsList, OrderPurchaseVo orderPurchaseVo) throws Exception;
 
     public Boolean purchaseCallBack(BaseUser user, String orderNo) throws Exception;
+
+    public MallOrder getByOrderNo(String orderNo, String userId) throws Exception;
 }
