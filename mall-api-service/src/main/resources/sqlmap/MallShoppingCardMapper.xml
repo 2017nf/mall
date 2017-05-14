@@ -4,7 +4,7 @@
 <mapper namespace="com.mall.mapper.MallShoppingCard">
 
 	<sql id="fields">
-        id, userId, amount,goodsId
+        id, userId, amount,goodsId,
 		createTime, updateTime, status, remark
     </sql>
     

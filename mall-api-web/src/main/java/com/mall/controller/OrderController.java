@@ -335,7 +335,7 @@ public class OrderController {
      */
     @ResponseBody
     @RequestMapping(value = "/addcart", method = RequestMethod.GET)
-    public JsonResult addCart(HttpServletRequest request, String goodsId, Integer goodsNum) throws Exception {
+    public JsonResult addCart(HttpServletRequest request, String goodsId, Integer goodsNum,String t) throws Exception {
         Token token = TokenUtil.getSessionUser(request);
         BaseUser user = userService.readById(token.getId());
         if (null == user) {

@@ -198,7 +198,7 @@ public class UserController {
             return new JsonResult(2, "无法找到用户信息");
         }
         if (user.getStatus() == StatusType.FALSE.getCode()) {
-            return new JsonResult(3, "您的帐号已被禁用");
+             return new JsonResult(3, "您的帐号已被禁用");
         }
         return new JsonResult(user);
     }
