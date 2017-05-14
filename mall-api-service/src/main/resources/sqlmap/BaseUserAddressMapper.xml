@@ -86,6 +86,13 @@
 		ORDER BY createTime DESC
 		limit #{startRow}, #{pageSize};
 	</select>
+	
+	<select id="getAddressListByUserId" resultType="com.mall.model.BaseUserAddress">
+		<include refid="selector"/>
+		where userId=#{userId}
+		ORDER BY createTime DESC
+		limit 10;
+	</select>
 
 
 	<select id="readCount" resultType="int">

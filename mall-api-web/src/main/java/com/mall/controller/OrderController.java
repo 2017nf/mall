@@ -15,6 +15,7 @@ import com.mall.service.MallOrderService;
 import com.mall.util.OrderNoUtil;
 import com.mall.util.TokenUtil;
 import com.mall.vo.GoodsVo;
+import com.mall.vo.OrderDetailVo;
 import com.mall.vo.OrderPurchaseVo;
 import com.mall.vo.OrderVo;
 import com.mall.vo.PurchaseingVo;
@@ -52,7 +53,7 @@ public class OrderController {
     private MallGoodsService goodsService;
     @Autowired
     private MallOrderService orderService;
-    @Autowired
+    @Autowired 
     private MallOrderDetailService orderDetailService;
     @Value("${purchase_weixin_notifyUrl}")
     private String purchaseWeixinNotifyUrl;
@@ -275,7 +276,8 @@ public class OrderController {
    	@ResponseBody
    	@RequestMapping(value = "/detail", method = RequestMethod.GET)
    	public JsonResult orderDetail(HttpServletRequest request, String orderNo) throws Exception {
-   		Token token = TokenUtil.getSessionUser(request);
+   		
+   		Token token = (Token) TokenUtil.getTokenObject("eyJuaWNrTmFtZSI6IuadsCIsImlkIjoiRjJDRURGMjIxMEMyNDNDNEE5M0YyODZEMjE2NTY5RUEiLCJ0aW1lIjoxNDk0NzUwNjAwMDcyfQ**");
    		
         BaseUser user = userService.readById(token.getId());
         
@@ -306,7 +308,22 @@ public class OrderController {
             //根据关联订单id和订单号查询订单列表
             List<MallOrderDetail> list = orderDetailService.readAll(mallOrderDetail);
             
-            BeanUtils.copyProperties(orderVo.getOrderList(), list);
+            if(list == null && list.size() <= 0){
+            	return new JsonResult(4,"购物车列表不存在");
+            }
+            
+            
+            List<OrderDetailVo> voList = new ArrayList<>();
+            OrderDetailVo orderDetailVo = null;
+            
+            for(MallOrderDetail mDetail : list){
+            	orderDetailVo = new OrderDetailVo();
+            	BeanUtils.copyProperties(orderDetailVo,mDetail);
+            	voList.add(orderDetailVo);
+            }
+            
+            orderVo.setOrderList(voList);
+            
    		}
 
    		//返回对象
