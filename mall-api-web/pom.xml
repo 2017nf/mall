@@ -57,7 +57,7 @@
 	<profiles>
 		<profile>
 			<id>dev</id>
-			<properties>
+			<properties> 
 				<env>dev</env>
 			</properties>
 			
