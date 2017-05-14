@@ -6,11 +6,13 @@
 	<url>/goods/sortlist</url>
 	<url>/goods/goodslist</url>
 	<url>/goods/detail</url>
-	<url>/order/detail</url
+	<url>/order/detail</url>
 	<url>/mall/upload/getToken</url>
 	<url>/index</url>
 	<url>/order/cartlist</url>
 	<url>/order/addcart</url>
+	<url>/user/token</url>
+	<url>/user/userinfo</url>
 
 
 	<!-- 静态资源-->
