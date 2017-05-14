@@ -6,7 +6,7 @@
 	<sql id="fields">
         id, orderNo, orderType, userId, storeId, storeName, goodsId, goodsName, detail,
 		icon, price, expressNo, expressName, userName, phone, addr,
-		createTime, updateTime, status, remark,num,shareUserId,payWay
+		createTime, updateTime, status, remark,num,payWay
     </sql>
     <sql id="table">mall_order</sql>
 

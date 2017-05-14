@@ -14,8 +14,12 @@ import com.mall.service.MallOrderDetailService;
 import com.mall.service.MallOrderService;
 import com.mall.util.OrderNoUtil;
 import com.mall.util.TokenUtil;
+import com.mall.vo.GoodsVo;
 import com.mall.vo.OrderPurchaseVo;
+import com.mall.vo.OrderVo;
 import com.mall.vo.PurchaseingVo;
+
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -263,7 +267,51 @@ public class OrderController {
         map.put("time", order.getCreateTime().getTime());
         return new JsonResult(map);
     }
+    
+    
+    /**
+   	 * 订单详情
+   	 */
+   	@ResponseBody
+   	@RequestMapping(value = "/detail", method = RequestMethod.GET)
+   	public JsonResult orderDetail(HttpServletRequest request, String orderNo) throws Exception {
+   		Token token = TokenUtil.getSessionUser(request);
+   		
+        BaseUser user = userService.readById(token.getId());
+        
+        if (null == user) {
+            logger.error(String.format("Illegal user id[%s]", token.getId()));
+            throw new IllegalArgumentException();
+        }
+        if (StringUtils.isEmpty(orderNo)) {
+            return new JsonResult(ResultCode.ERROR.getCode(), "orderNo不能为空");
+        }
+   		
+   		//根据订单号查询订单
+   		MallOrder order = orderService.getByOrderNo(orderNo,user.getId());
+   		if (order == null) {
+            return new JsonResult(ResultCode.ERROR.getCode(), "订单不存在");
+        }
+   		OrderVo orderVo = new OrderVo();;
+   		if(order.getOrderType().intValue() == OrderType.PURCHASE.getCode().intValue()){
+   			//直接购买一件商品，直接返回
+   			BeanUtils.copyProperties(orderVo, order);
+   			
+   		}else if(order.getOrderType().intValue() == OrderType.CARTPAY.getCode().intValue()){
+   			
+   			//购物车购买(根据订单号和订单关联id查询订单)
+   			MallOrderDetail mallOrderDetail = new MallOrderDetail();
+            mallOrderDetail.setOrderNo(order.getOrderNo());
+            mallOrderDetail.setOrderId(order.getId());
+            //根据关联订单id和订单号查询订单列表
+            List<MallOrderDetail> list = orderDetailService.readAll(mallOrderDetail);
+            
+            BeanUtils.copyProperties(orderVo.getOrderList(), list);
+   		}
 
+   		//返回对象
+   		return new JsonResult(orderVo);
+   	}
 
 }
 
