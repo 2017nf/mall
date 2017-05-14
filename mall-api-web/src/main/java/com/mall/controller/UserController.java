@@ -47,6 +47,26 @@ public class UserController {
      * 微信登录
      */
     @ResponseBody
+    @RequestMapping(value = "/token", method = RequestMethod.GET)
+    public JsonResult loginByWeixin(HttpServletRequest request,String id) throws Exception {
+        if (StringUtils.isBlank(id)) {
+            return new JsonResult(-1, "id不能為空");
+        }
+        BaseUser user = userService.readById(id);
+        // 登录
+        String token = TokenUtil.generateToken(user.getId(), user.getNickName());
+        Strings.setEx(RedisKey.TOKEN_API.getKey() + user.getId(), RedisKey.TOKEN_API.getSeconds(), token);
+        if (logger.isInfoEnabled()) {
+            logger.info(String.format("user login[%s]", TokenUtil.getTokenObject(token)));
+        }
+        return new JsonResult(user);
+    }
+
+
+    /**
+     * 微信登录
+     */
+    @ResponseBody
     @RequestMapping(value = "/wxlogin", method = RequestMethod.POST)
     public JsonResult loginByWeixin(HttpServletRequest request, @RequestBody LoginUserVo vo) throws Exception {
         if (StringUtils.isBlank(vo.getUnionId())) {
@@ -179,15 +199,6 @@ public class UserController {
         if (user.getStatus() == StatusType.FALSE.getCode()) {
             return new JsonResult(3, "您的帐号已被禁用");
         }
-        // Redis获取Token
-        String redisToken = Strings.get(RedisKey.TOKEN_API.getKey() + token.getId());
-        if (logger.isInfoEnabled()) {
-            logger.info(String.format("user again login[%s]", TokenUtil.getTokenObject(redisToken)));
-        }
-        UserVo vo = new UserVo();
-        BeanUtils.copyProperties(vo, user);
-        vo.setToken(redisToken);
-        setUserVo(user, vo);
-        return new JsonResult(vo);
+        return new JsonResult(user);
     }
 }

@@ -9,6 +9,12 @@
 	<url>/order/detail</url>
 	<url>/mall/upload/getToken</url>
 	<url>/index</url>
+	<url>/order/cartlist</url>
+	<url>/order/addcart</url>
+	<url>/user/token</url>
+	<url>/user/userinfo</url>
+
+
 	<!-- 静态资源-->
 	<url>/resources</url>
 	<url>/download</url>

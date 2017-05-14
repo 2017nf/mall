@@ -4,7 +4,7 @@
 <mapper namespace="com.mall.mapper.MallShoppingCard">
 
 	<sql id="fields">
-        id, userId, amount,
+        id, userId, amount,goodsId
 		createTime, updateTime, status, remark
     </sql>
     
@@ -19,6 +19,7 @@
         <where>
             1=1
             <if test="model.id != null">AND id= #{model.id}</if>
+            <if test="model.goodsId != null">AND goodsId= #{model.goodsId}</if>
             <if test="model.userId != null">AND userId= #{model.userId}</if>
             <if test="model.status != null">AND status= #{model.status}</if>
         </where>
@@ -27,31 +28,21 @@
 
 	<insert id="create" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO <include refid="table"/> (<include refid="fields"/>)
-		VALUES (#{id}, #{userId}, #{amount},
+		VALUES (#{id}, #{userId}, #{amount},#{goodsId},
 		         #{createTime}, #{updateTime}, #{status}, #{remark})
     </insert>
-	<!---->
-	<!--<update id="update">-->
-        <!--UPDATE <include refid="table"/>-->
-        <!--<set>-->
-            <!--<if test="model.storeName != null">storeName= #{model.storeName},</if>-->
-            <!--<if test="model.icon != null">icon= #{model.icon},</if>-->
-            <!--<if test="model.province != null">province= #{model.province},</if>-->
-            <!--<if test="model.city != null">city= #{model.city},</if>-->
-            <!--<if test="model.county != null">county= #{model.county},</if>-->
-            <!--<if test="model.addr != null">addr= #{model.addr},</if>-->
-            <!--<if test="model.inviteCode != null">inviteCode= #{model.inviteCode},</if>-->
-            <!--<if test="model.detail != null">detail= #{model.detail},</if>-->
-            <!--<if test="model.firstReferrerScale != null">firstReferrerScale= #{model.firstReferrerScale},</if>-->
-            <!--<if test="model.secondReferrerScale != null">secondReferrerScale= #{model.secondReferrerScale},</if>-->
-            <!--<if test="model.thirdReferrerScale != null">thirdReferrerScale= #{model.thirdReferrerScale},</if>-->
-            <!--<if test="model.updateTime != null">updateTime= #{model.updateTime},</if>-->
-            <!--<if test="model.status != null">status= #{model.status},</if>-->
-            <!--<if test="model.remark != null">remark= #{model.remark}</if>-->
-        <!--</set>-->
-		<!--WHERE id = #{id}-->
-    <!--</update>-->
-    <!---->
+
+	<update id="updateById">
+        UPDATE <include refid="table"/>
+        <set>
+            <if test="model.amount != null">userId= #{model.amount},</if>
+            <if test="model.updateTime != null">updateTime= #{model.updateTime},</if>
+            <if test="model.status != null">status= #{model.status},</if>
+            <if test="model.remark != null">remark= #{model.remark},</if>
+        </set>
+		WHERE id = #{id}
+    </update>
+
 
     <select id="readById" resultType="com.mall.model.MallShoppingCard">
         <include refid="selector"/>

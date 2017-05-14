@@ -17,9 +17,21 @@ public class MallShoppingCard extends BaseModel {
      */
     private String userId;
     /**
+     * 商品分类ID
+     */
+    private String goodsId;
+    /**
      * 金额
      */
     private Integer amount;
+
+    public String getGoodsId() {
+        return goodsId;
+    }
+
+    public void setGoodsId(String goodsId) {
+        this.goodsId = goodsId;
+    }
 
     public String getUserId() {
         return userId;

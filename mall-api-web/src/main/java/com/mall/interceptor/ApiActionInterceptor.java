@@ -73,6 +73,10 @@ public class ApiActionInterceptor extends HandlerInterceptorAdapter {
         logger.error(token);
         logger.error("********************************************");
         Object obj = TokenUtil.getTokenObject(token);
+        logger.error("00000000000000000000000000000000000000000000");
+        logger.error("getTokenObj-->obj:  "+obj);
+        logger.error("00000000000000000000000000000000000000000000");
+
         if (obj == null) {
             throw new CommonException(ResultCode.NO_LOGIN.getCode(), ResultCode.NO_LOGIN.getMsg());
         }
