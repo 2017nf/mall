@@ -5,10 +5,12 @@ import com.mall.core.dao.CommonDao;
 import com.mall.core.page.DBPage;
 import com.mall.util.UUIDUtil;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public abstract class CommonServiceImpl<M extends BaseModel> {
@@ -44,7 +46,7 @@ public abstract class CommonServiceImpl<M extends BaseModel> {
     // 创建方法捕捉异常，打出日志后，抛出RuntimeException以便上层事务回滚
     public void create(M model) {
         try {
-            defaultStatus(model);
+            defaultCreate(model);
             getDao().create(model);
             processCacheAfterCreate(model);
         } catch (Exception e) {
@@ -57,7 +59,7 @@ public abstract class CommonServiceImpl<M extends BaseModel> {
 
     public void createWithUUID(M model) {
         try {
-            defaultStatus(model);
+//            defaultStatus(model);
             model.setId(UUIDUtil.getUUID());
             getDao().create(model);
             processCacheAfterCreate(model);
@@ -84,7 +86,7 @@ public abstract class CommonServiceImpl<M extends BaseModel> {
 
     public M readOne(M model) {
         try {
-            defaultStatus(model);
+//            defaultStatus(model);
             return getDao().readOne(model);
         } catch (Exception e) {
             if (logger.isErrorEnabled()) {
@@ -102,7 +104,7 @@ public abstract class CommonServiceImpl<M extends BaseModel> {
         }
         List<M> list = null;
         try {
-            defaultStatus(model);
+//            defaultStatus(model);
             list = getDao().readList(model, dbPage.getStartRow(), dbPage.getPageSize());
         } catch (Exception e) {
             if (logger.isErrorEnabled()) {
@@ -115,7 +117,7 @@ public abstract class CommonServiceImpl<M extends BaseModel> {
     public List<M> readAll(M model) {
         List<M> list = null;
         try {
-            defaultStatus(model);
+//            defaultStatus(model);
             list = getDao().readList(model, 0, 1000);
         } catch (Exception e) {
             if (logger.isErrorEnabled()) {
@@ -129,7 +131,7 @@ public abstract class CommonServiceImpl<M extends BaseModel> {
     public int readCount(M model) {
         Integer count = 0;
         try {
-            defaultStatus(model);
+//            defaultStatus(model);
             count = getDao().readCount(model);
         } catch (Exception e) {
             if (logger.isErrorEnabled()) {
@@ -145,6 +147,7 @@ public abstract class CommonServiceImpl<M extends BaseModel> {
         try {
             M dbModel = readById(id);
             if (dbModel == null) return;
+            defaultUpdate(model);
             getDao().updateById(id, model);
             processCacheAfterUpdateById(id, dbModel);
         } catch (Exception e) {
@@ -169,13 +172,30 @@ public abstract class CommonServiceImpl<M extends BaseModel> {
         }
     }
 
-    public void defaultStatus(M model) {
-//	 try {
-//	 Integer status = model.getStatus();
-//	 status = status == null ? 1:status;
-//	 model.setStatus(status);
-//	 } catch (Exception e) {
-//	 model.setStatus(1);
-//	 }
+    public void defaultCreate(M model) {
+	 try {
+         Integer status = model.getStatus();
+         status = status == null ? 0:status;
+         model.setStatus(status);
+         if (StringUtils.isEmpty(model.getId())){
+             model.setId(UUIDUtil.getUUID());
+         }
+         if (model.getCreateTime()==null){
+             model.setCreateTime(new Date());
+         }
+	 } catch (Exception e) {
+	 model.setStatus(1);
+	 }
+    }
+
+    public void defaultUpdate(M model) {
+        try {
+            Integer status = model.getStatus();
+            status = status == null ? 0:status;
+            model.setStatus(status);
+            model.setUpdateTime(new Date());
+        } catch (Exception e) {
+            model.setStatus(1);
+        }
     }
 }

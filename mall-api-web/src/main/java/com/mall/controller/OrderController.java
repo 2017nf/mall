@@ -3,23 +3,18 @@ package com.mall.controller;
 import com.mall.common.Token;
 import com.mall.constant.*;
 import com.mall.core.page.JsonResult;
-import com.mall.model.BaseUser;
-import com.mall.model.MallGoods;
-import com.mall.model.MallOrder;
-import com.mall.model.MallOrderDetail;
+import com.mall.model.*;
 import com.mall.pay.wechatpay.GenerateOrder;
-import com.mall.service.BaseUserService;
-import com.mall.service.MallGoodsService;
-import com.mall.service.MallOrderDetailService;
-import com.mall.service.MallOrderService;
+import com.mall.service.*;
 import com.mall.util.OrderNoUtil;
 import com.mall.util.TokenUtil;
 import com.mall.vo.GoodsVo;
 import com.mall.vo.OrderPurchaseVo;
 import com.mall.vo.OrderVo;
 import com.mall.vo.PurchaseingVo;
-
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -54,6 +49,8 @@ public class OrderController {
     private MallOrderService orderService;
     @Autowired
     private MallOrderDetailService orderDetailService;
+    @Autowired
+    private MallShoppingCardService shoppingCardService;
     @Value("${purchase_weixin_notifyUrl}")
     private String purchaseWeixinNotifyUrl;
 
@@ -169,7 +166,7 @@ public class OrderController {
         }
         String orderNo = vo.getOrderNo();
         //TODO(已完善)
-       // 根据订单号查询订单
+        // 根据订单号查询订单
         MallOrder order = orderService.getByOrderNo(orderNo, user.getId());
         if (order == null) {
             return new JsonResult(ResultCode.ERROR.getCode(), "订单不存在");
@@ -194,8 +191,8 @@ public class OrderController {
             mallOrderDetail.setOrderId(order.getId());
             //根据关联订单id和订单号查询订单列表
             List<MallOrderDetail> list = orderDetailService.readList(mallOrderDetail, 1, 10, 1000);
-            if(list == null && list.size() <= 0){
-                return new JsonResult(4,"购物车中没有商品");
+            if (list == null && list.size() <= 0) {
+                return new JsonResult(4, "购物车中没有商品");
             }
             for (MallOrderDetail orderDetail : list) {
                 //TODO(未完善)
@@ -267,18 +264,18 @@ public class OrderController {
         map.put("time", order.getCreateTime().getTime());
         return new JsonResult(map);
     }
-    
-    
+
+
     /**
-   	 * 订单详情
-   	 */
-   	@ResponseBody
-   	@RequestMapping(value = "/detail", method = RequestMethod.GET)
-   	public JsonResult orderDetail(HttpServletRequest request, String orderNo) throws Exception {
-   		Token token = TokenUtil.getSessionUser(request);
-   		
+     * 订单详情
+     */
+    @ResponseBody
+    @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    public JsonResult orderDetail(HttpServletRequest request, String orderNo) throws Exception {
+        Token token = TokenUtil.getSessionUser(request);
+
         BaseUser user = userService.readById(token.getId());
-        
+
         if (null == user) {
             logger.error(String.format("Illegal user id[%s]", token.getId()));
             throw new IllegalArgumentException();
@@ -286,32 +283,110 @@ public class OrderController {
         if (StringUtils.isEmpty(orderNo)) {
             return new JsonResult(ResultCode.ERROR.getCode(), "orderNo不能为空");
         }
-   		
-   		//根据订单号查询订单
-   		MallOrder order = orderService.getByOrderNo(orderNo,user.getId());
-   		if (order == null) {
+
+        //根据订单号查询订单
+        MallOrder order = orderService.getByOrderNo(orderNo, user.getId());
+        if (order == null) {
             return new JsonResult(ResultCode.ERROR.getCode(), "订单不存在");
         }
-   		OrderVo orderVo = new OrderVo();;
-   		if(order.getOrderType().intValue() == OrderType.PURCHASE.getCode().intValue()){
-   			//直接购买一件商品，直接返回
-   			BeanUtils.copyProperties(orderVo, order);
-   			
-   		}else if(order.getOrderType().intValue() == OrderType.CARTPAY.getCode().intValue()){
-   			
-   			//购物车购买(根据订单号和订单关联id查询订单)
-   			MallOrderDetail mallOrderDetail = new MallOrderDetail();
+        OrderVo orderVo = new OrderVo();
+        ;
+        if (order.getOrderType().intValue() == OrderType.PURCHASE.getCode().intValue()) {
+            //直接购买一件商品，直接返回
+            BeanUtils.copyProperties(orderVo, order);
+
+        } else if (order.getOrderType().intValue() == OrderType.CARTPAY.getCode().intValue()) {
+
+            //购物车购买(根据订单号和订单关联id查询订单)
+            MallOrderDetail mallOrderDetail = new MallOrderDetail();
             mallOrderDetail.setOrderNo(order.getOrderNo());
             mallOrderDetail.setOrderId(order.getId());
             //根据关联订单id和订单号查询订单列表
             List<MallOrderDetail> list = orderDetailService.readAll(mallOrderDetail);
-            
-            BeanUtils.copyProperties(orderVo.getOrderList(), list);
-   		}
 
-   		//返回对象
-   		return new JsonResult(orderVo);
-   	}
+            BeanUtils.copyProperties(orderVo.getOrderList(), list);
+        }
+
+        //返回对象
+        return new JsonResult(orderVo);
+    }
+
+
+    /**
+     * 添加购物车
+     */
+    @ResponseBody
+    @RequestMapping(value = "/addcart", method = RequestMethod.GET)
+    public JsonResult addCart(HttpServletRequest request, String goodsId, Integer goodsNum) throws Exception {
+        Token token = TokenUtil.getSessionUser(request);
+        BaseUser user = userService.readById(token.getId());
+        if (null == user) {
+            logger.error(String.format("Illegal user id[%s]", token.getId()));
+            throw new IllegalArgumentException();
+        }
+        if (StringUtils.isEmpty(goodsId)) {
+            return new JsonResult(ResultCode.ERROR.getCode(), "商品id不能为空");
+        }
+        if (goodsNum == null || goodsNum == 0) {
+            return new JsonResult(ResultCode.ERROR.getCode(), "商品数量必须大于0");
+        }
+
+        MallGoods goods = goodsService.readById(goodsId);
+        if (goods == null) {
+            return new JsonResult(ResultCode.ERROR.getCode(), "商品已下架");
+        }
+        MallShoppingCard card = new MallShoppingCard();
+        card.setUserId(token.getId());
+        card.setGoodsId(goods.getId());
+        List<MallShoppingCard> list = shoppingCardService.readList(card, 1, 1, 1);
+        MallShoppingCard model = new MallShoppingCard();
+        model.setAmount(goodsNum);
+        if (CollectionUtils.isEmpty(list)) {
+            model.setGoodsId(goods.getId());
+            model.setUserId(token.getId());
+            shoppingCardService.create(model);
+        } else if (list.size() == 1) {
+            model.setId(list.get(0).getId());
+            shoppingCardService.updateById(model.getId(), model);
+        }
+        //返回对象
+        return new JsonResult();
+    }
+
+
+    /**
+     * 返回购物车数据
+     */
+    @ResponseBody
+    @RequestMapping(value = "/cartlist", method = RequestMethod.GET)
+    public JsonResult addCart(HttpServletRequest request) throws Exception {
+        Token token = TokenUtil.getSessionUser(request);
+        BaseUser user = userService.readById(token.getId());
+        if (null == user) {
+            logger.error(String.format("Illegal user id[%s]", token.getId()));
+            throw new IllegalArgumentException();
+        }
+        MallShoppingCard card = new MallShoppingCard();
+        card.setUserId(token.getId());
+        List<MallShoppingCard>  list =  shoppingCardService.readList(card,1,30,30);
+        List<GoodsVo>  voList =  new ArrayList<>();
+        if (CollectionUtils.isEmpty(list)) {
+            list = new ArrayList<>();
+            return new JsonResult(voList);
+        } else{
+            for (MallShoppingCard model: list) {
+                GoodsVo vo = new GoodsVo();
+                MallGoods goods = goodsService.readById(model.getGoodsId());
+                if (goods==null){
+                    continue;
+                }
+                BeanUtils.copyProperties(vo,goods);
+                voList.add(vo);
+            }
+        }
+        return new JsonResult(voList);
+    }
+
 
 }
 

@@ -84,4 +84,12 @@ public class TokenUtil {
         }
         return token;
     }
+
+    public static void main(String[] args) {
+
+        System.out.println(
+                TokenUtil.generateToken("F2CEDF2210C243C4A93F286D216569EA","杰")
+        );
+
+    }
 }
