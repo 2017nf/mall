@@ -213,7 +213,7 @@ public class QiNiuUtil {
 
     //Uptoken
     public static void main(String[] args) throws QiniuException {
-        System.out.println(getToken(BucketType.MALL.getValue()));
-        System.out.println(getToken(""));
+        //System.out.println(getToken(BucketType.MALL.getCode()));
+        //System.out.println(getToken(""));
     }
 }
