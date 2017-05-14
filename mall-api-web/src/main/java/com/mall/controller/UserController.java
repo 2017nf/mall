@@ -59,6 +59,7 @@ public class UserController {
         if (logger.isInfoEnabled()) {
             logger.info(String.format("user login[%s]", TokenUtil.getTokenObject(token)));
         }
+        user.setRemark(token);
         return new JsonResult(user);
     }
 

@@ -359,7 +359,7 @@ public class OrderController {
         List<MallShoppingCard> list = shoppingCardService.readList(card, 1, 1, 1);
         MallShoppingCard model = new MallShoppingCard();
         model.setAmount(goodsNum);
-        if (CollectionUtils.isEmpty(list)) {
+            if (CollectionUtils.isEmpty(list)) {
             model.setGoodsId(goods.getId());
             model.setUserId(token.getId());
             shoppingCardService.create(model);
