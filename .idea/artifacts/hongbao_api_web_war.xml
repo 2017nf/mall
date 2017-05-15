@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="hongbao-api-web:war">
-    <output-path>$PROJECT_DIR$/hongbao-api-web/target</output-path>
-    <root id="archive" name="api.war">
-      <element id="artifact" artifact-name="hongbao-api-web:war exploded" />
-    </root>
-  </artifact>
-</component>
