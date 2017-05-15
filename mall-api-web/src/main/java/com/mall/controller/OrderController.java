@@ -345,7 +345,7 @@ public class OrderController {
         if (StringUtils.isEmpty(goodsId)) {
             return new JsonResult(ResultCode.ERROR.getCode(), "商品id不能为空");
         }
-        if (goodsNum == null || goodsNum == 0) {
+        if (goodsNum == null || goodsNum <= 0) {
             return new JsonResult(ResultCode.ERROR.getCode(), "商品数量必须大于0");
         }
 
@@ -359,7 +359,7 @@ public class OrderController {
         List<MallShoppingCard> list = shoppingCardService.readList(card, 1, 1, 1);
         MallShoppingCard model = new MallShoppingCard();
         model.setAmount(goodsNum);
-            if (CollectionUtils.isEmpty(list)) {
+        if (CollectionUtils.isEmpty(list)) {
             model.setGoodsId(goods.getId());
             model.setUserId(token.getId());
             shoppingCardService.create(model);
@@ -399,6 +399,7 @@ public class OrderController {
                     continue;
                 }
                 BeanUtils.copyProperties(vo,goods);
+                vo.setAmount(model.getAmount());
                 voList.add(vo);
             }
         }
