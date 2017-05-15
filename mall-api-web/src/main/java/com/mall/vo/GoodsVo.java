@@ -83,6 +83,11 @@ public class GoodsVo {
      */
     private String remark;
 
+    /**
+     * 数量
+     */
+    private Integer amount;
+
     public String getSortId() {
         return sortId;
     }
@@ -218,5 +223,12 @@ public class GoodsVo {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-    
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
 }
