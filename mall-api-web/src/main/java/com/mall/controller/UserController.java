@@ -101,10 +101,8 @@ public class UserController {
         if (logger.isInfoEnabled()) {
             logger.info(String.format("user login[%s]", TokenUtil.getTokenObject(token)));
         }
-        UserVo userVo = new UserVo();
         BeanUtils.copyProperties(vo, user);
-        userVo.setToken(token);
-        setUserVo(user, userVo);
+        vo.setToken(token);
         return new JsonResult(vo);
     }
 

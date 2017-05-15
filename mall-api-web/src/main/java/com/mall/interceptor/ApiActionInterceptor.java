@@ -63,7 +63,6 @@ public class ApiActionInterceptor extends HandlerInterceptorAdapter {
         if (null == token) {
             token = request.getParameter("token");
         }
-        token = "eyJuaWNrTmFtZSI6IuadsCIsImlkIjoiRjJDRURGMjIxMEMyNDNDNEE5M0YyODZEMjE2NTY5RUEiLCJ0aW1lIjoxNDk0NzUwNjAwMDcyfQ**";
         System.err.println("token:" + token);
         if (StringUtils.isEmpty(token)) {
             throw new CommonException(ResultCode.NO_TOKEN.getCode(), ResultCode.NO_TOKEN.getMsg());

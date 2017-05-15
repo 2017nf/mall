@@ -8,7 +8,7 @@
 		createTime, updateTime, status, remark
 	</sql>
 
-	<sql id="table">base_user</sql>
+	<sql id="table">base_user_address</sql>
 
 	<sql id="selector">
 		SELECT

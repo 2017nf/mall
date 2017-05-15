@@ -156,7 +156,6 @@ public class OrderController {
     @RequestMapping(value = "/purchasing", method = RequestMethod.POST)
     public JsonResult purchasing(HttpServletRequest request, @RequestBody PurchaseingVo vo) throws Exception {
         Token token = TokenUtil.getSessionUser(request);
-
         BaseUser user = userService.readById(token.getId());
         if (null == user) {
             logger.error(String.format("Illegal user id[%s]", token.getId()));
@@ -273,10 +272,7 @@ public class OrderController {
     @ResponseBody
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public JsonResult orderDetail(HttpServletRequest request, String orderNo) throws Exception {
-//        Token token = TokenUtil.getSessionUser(request);
-    	
-    	Token token = (Token) TokenUtil.getTokenObject("eyJuaWNrTmFtZSI6IuadsCIsImlkIjoiRjJDRURGMjIxMEMyNDNDNEE5M0YyODZEMjE2NTY5RUEiLCJ0aW1lIjoxNDk0NzUwNjAwMDcyfQ**");
-
+        Token token = TokenUtil.getSessionUser(request);
         BaseUser user = userService.readById(token.getId());
 
         if (null == user) {

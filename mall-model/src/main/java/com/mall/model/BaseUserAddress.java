@@ -20,8 +20,6 @@ public class BaseUserAddress extends BaseModel {
 	private String county;
 	/** 详细地址 */
 	private String addr;
-	/** 是否默认地址：0：否，1：是 */
-	private Integer isDefault;
 
 	public String getUserId() {
 		return userId;
@@ -61,13 +59,5 @@ public class BaseUserAddress extends BaseModel {
 
 	public void setAddr(String addr) {
 		this.addr = addr;
-	}
-
-	public Integer getIsDefault() {
-		return isDefault;
-	}
-
-	public void setIsDefault(Integer isDefault) {
-		this.isDefault = isDefault;
 	}
 }

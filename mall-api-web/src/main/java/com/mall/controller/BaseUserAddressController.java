@@ -31,11 +31,11 @@ public class BaseUserAddressController {
      * 地址列表
      */
     @ResponseBody
-    @RequestMapping(value = "/addressList", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     public JsonResult addressList(HttpServletRequest request) throws Exception {
-        //Token token = TokenUtil.getSessionUser(request);
+        Token token = TokenUtil.getSessionUser(request);
     	
-    	Token token = (Token) TokenUtil.getTokenObject("eyJuaWNrTmFtZSI6IuadsCIsImlkIjoiRjJDRURGMjIxMEMyNDNDNEE5M0YyODZEMjE2NTY5RUEiLCJ0aW1lIjoxNDk0NzUwNjAwMDcyfQ**");
+//    	Token token = (Token) TokenUtil.getTokenObject("eyJuaWNrTmFtZSI6IuadsCIsImlkIjoiRjJDRURGMjIxMEMyNDNDNEE5M0YyODZEMjE2NTY5RUEiLCJ0aW1lIjoxNDk0NzUwNjAwMDcyfQ**");
         
         List<BaseUserAddress> addresssList = baseUserAddressService.getAddressListByUserId(token.getId());
 
@@ -49,9 +49,9 @@ public class BaseUserAddressController {
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public JsonResult add(HttpServletRequest request,@RequestBody BaseUserAddress address) throws Exception {
-        //Token token = TokenUtil.getSessionUser(request);
+        Token token = TokenUtil.getSessionUser(request);
     	
-    	Token token = (Token) TokenUtil.getTokenObject("eyJuaWNrTmFtZSI6IuadsCIsImlkIjoiRjJDRURGMjIxMEMyNDNDNEE5M0YyODZEMjE2NTY5RUEiLCJ0aW1lIjoxNDk0NzUwNjAwMDcyfQ**");
+//    	Token token = (Token) TokenUtil.getTokenObject("eyJuaWNrTmFtZSI6IuadsCIsImlkIjoiRjJDRURGMjIxMEMyNDNDNEE5M0YyODZEMjE2NTY5RUEiLCJ0aW1lIjoxNDk0NzUwNjAwMDcyfQ**");
         		
     	String addr = address.getAddr();
     	String province = address.getProvince();
@@ -61,7 +61,7 @@ public class BaseUserAddressController {
     	if(StringUtils.isEmpty(addr)){
     		return new JsonResult(2,"详细地址不能为空");
     	}
-    	if(StringUtils.isEmpty(province)){
+/*    	if(StringUtils.isEmpty(province)){
     		return new JsonResult(3,"省份不能为空");
     	}
     	if(StringUtils.isEmpty(county)){
@@ -79,7 +79,7 @@ public class BaseUserAddressController {
 		}
 		if(addr.indexOf(province) < 0){
 			addr = province + addr;
-		}
+		}*/
 		
 		address.setUserId(token.getId());
 		
