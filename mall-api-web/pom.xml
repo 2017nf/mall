@@ -129,6 +129,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>api</finalName>
+		<finalName>mall</finalName>
 	</build>
 </project>
