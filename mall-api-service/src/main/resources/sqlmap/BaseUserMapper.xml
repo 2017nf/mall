@@ -4,7 +4,7 @@
 <mapper namespace="com.mall.mapper.BaseUserMapper">
 
 	<sql id="fields">
-		id, uid,unionId, openId, phone, salt, nickName,sex, headImgUrl,province,city,county,addr,loginTime,amount,
+		id, uid,unionId, openId, phone, salt, nickName,sex, headImgUrl,province,city,county,addr,loginTime,amount,payWord,
 		createTime, updateTime, status, remark
 	</sql>
 
@@ -28,6 +28,7 @@
 			<if test="model.status != null">AND status= #{model.status}</if>
 			<if test="model.openId != null">AND openId= #{model.openId}</if>
 			<if test="model.amount != null">AND amount= #{model.amount}</if>
+			<if test="model.payWord != null">AND payWord= #{model.payWord}</if>
 		</where>
 	</sql>
 
@@ -38,13 +39,13 @@
 		<include refid="fields" />
 		)
 		VALUES (#{id}, #{uid}, #{unionId},#{openId}, #{phone}, #{salt},  #{nickName}, #{sex},
-		#{headImgUrl},#{province},#{city},#{county},#{addr},#{loginTime},#{amount},
+		#{headImgUrl},#{province},#{city},#{county},#{addr},#{loginTime},#{amount},#{payWord},
 		#{createTime}, #{updateTime}, #{status}, #{remark})
 	</insert>
 
 
 
-	<update id="update">
+	<update id="updateById">
 		UPDATE
 		<include refid="table" />
 		<set>
@@ -59,6 +60,7 @@
 			<if test="model.openId != null">openId= #{model.openId},</if>
 			<if test="model.unionId != null">unionId= #{model.unionId},</if>
 			<if test="model.amount != null">amount=#{model.amount},</if>
+			<if test="model.payWord != null">payWord=#{model.payWord}</if>
 		</set>
 		WHERE id = #{id}
 	</update>

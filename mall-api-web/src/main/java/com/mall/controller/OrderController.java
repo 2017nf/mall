@@ -7,6 +7,7 @@ import com.mall.model.*;
 import com.mall.pay.mini.GenerateMiniOrder;
 import com.mall.pay.wechatpay.GenerateOrder;
 import com.mall.service.*;
+import com.mall.util.Md5Util;
 import com.mall.util.OrderNoUtil;
 import com.mall.util.TokenUtil;
 import com.mall.vo.GoodsVo;
@@ -131,6 +132,12 @@ public class OrderController {
             map.put("prepayid", wxMap.get("prepayid"));
             map.put("sign", wxMap.get("sign"));
         } else if (source == PayType.BALANCEPAY.getCode().intValue()) {
+            if (StringUtils.isBlank(user.getPayWord())) {
+                return new JsonResult(2, "请先设置支付密码");
+            }
+            if (!user.getPayWord().equals(Md5Util.MD5Encode(orderPurchaseVo.getPayPwd(), user.getSalt()))) {
+                return new JsonResult(3, "支付密码不正确");
+            }
             //余额支付
             Double score = 0d;
             if (order.getOrderType().intValue() == OrderType.PURCHASE.getCode().intValue()) {

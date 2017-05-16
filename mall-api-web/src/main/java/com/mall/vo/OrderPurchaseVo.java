@@ -10,6 +10,8 @@ public class OrderPurchaseVo implements Serializable {
 
 	private static final long serialVersionUID = 8041418456665782640L;
 
+	/** 支付密码 */
+	private String payPwd;
 	/** 收件人姓名 */
 	private String userName;
 	/** 手机号 */
@@ -60,5 +62,13 @@ public class OrderPurchaseVo implements Serializable {
 
 	public void setCartList(List<CartVo> cartList) {
 		this.cartList = cartList;
+	}
+
+	public String getPayPwd() {
+		return payPwd;
+	}
+
+	public void setPayPwd(String payPwd) {
+		this.payPwd = payPwd;
 	}
 }
