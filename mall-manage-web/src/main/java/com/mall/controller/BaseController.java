@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public abstract class BaseController<D extends BaseModel> {
+public abstract class BaseController<D extends Object> {
 
     protected abstract JsonResult index(HttpServletRequest request, D model, Page page) throws Exception;
 

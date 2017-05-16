@@ -5,7 +5,7 @@ import com.mall.model.MallGoods;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MallGoodsGoodsMapper extends CommonDao<MallGoods> {
+public interface MallGoodsMapper extends CommonDao<MallGoods> {
 
 
 }

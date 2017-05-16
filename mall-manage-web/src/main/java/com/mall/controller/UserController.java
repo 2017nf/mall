@@ -42,22 +42,22 @@ public class UserController  extends  BaseController{
     }
 
     @Override
-    protected JsonResult index(HttpServletRequest request, BaseModel model, Page page) {
+    protected JsonResult index(HttpServletRequest request, Object model, Page page) throws Exception {
         return null;
     }
 
     @Override
-    protected JsonResult add(HttpServletRequest request, BaseModel model) {
+    protected JsonResult add(HttpServletRequest request, Object model) throws Exception {
         return null;
     }
 
     @Override
-    protected JsonResult edit(HttpServletRequest request, BaseModel model) {
+    protected JsonResult edit(HttpServletRequest request, Object model) throws Exception {
         return null;
     }
 
     @Override
-    protected JsonResult list(HttpServletRequest request, BaseModel model, Page page) {
+    protected JsonResult list(HttpServletRequest request, Object model, Page page) throws Exception {
         return null;
     }
 }
