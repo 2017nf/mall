@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.mall.mapper.MallGoodsGoodsMapper">
+<mapper namespace="com.mall.mapper.MallGoodsMapper">
 
 	<sql id="fields">
 		id, sortId, storeId, storeName, name, icon, price,detail, goodsType, stock, isTop, isRecommend,originalPrice,
@@ -43,36 +43,27 @@
 
 
 
-	<!--<update id="update">-->
-		<!--UPDATE-->
-		<!--<include refid="table" />-->
-		<!--<set>-->
-			<!--<if test="model.name != null">name= #{model.name},</if>-->
-			<!--<if test="model.icon != null">icon= #{model.icon},</if>-->
-			<!--<if test="model.price != null">price= #{model.price},</if>-->
-			<!--<if test="model.drawPrice != null">drawPrice= #{model.drawPrice},</if>-->
-			<!--<if test="model.drawNum != null">drawNum= #{model.drawNum},</if>-->
-			<!--<if test="model.detail != null">detail= #{model.detail},</if>-->
-			<!--<if test="model.stock != null">stock= #{model.stock},</if>-->
-			<!--<if test="model.curIssueNo != null">curIssueNo= #{model.curIssueNo},</if>-->
-			<!--<if test="model.curIssueId != null">curIssueId= #{model.curIssueId},</if>-->
-			<!--<if test="model.saleSwitch != null">saleSwitch= #{model.saleSwitch},</if>-->
-			<!--<if test="model.updateTime != null">updateTime= #{model.updateTime},</if>-->
-			<!--<if test="model.status != null">status= #{model.status},</if>-->
-			<!--<if test="model.remark != null">remark= #{model.remark},</if>-->
-			<!--<if-->
-				<!--test="model.firstReferrerScale != null and model.firstReferrerScale >= 0">firstReferrerScale= #{model.firstReferrerScale},</if>-->
-			<!--<if-->
-				<!--test="model.secondReferrerScale != null  and model.secondReferrerScale >= 0">secondReferrerScale= #{model.secondReferrerScale},</if>-->
-			<!--<if-->
-				<!--test="model.thirdReferrerScale != null  and model.thirdReferrerScale >= 0">thirdReferrerScale= #{model.thirdReferrerScale},</if>-->
-			<!--<if test="model.businessSendEp != null  and model.businessSendEp >= 0">businessSendEp= #{model.businessSendEp},</if>-->
-			<!--<if test="model.originalPrice != null">originalPrice= #{model.originalPrice}</if>-->
-		<!--</set>-->
-		<!--WHERE id = #{id}-->
-	<!--</update>-->
+	<update id="updateById">
+		UPDATE
+		<include refid="table" />
+		<set>
+			<if test="model.name != null">name= #{model.name},</if>
+			<if test="model.sortId != null">sortId= #{model.sortId},</if>
+			<if test="model.icon != null">icon= #{model.icon},</if>
+			<if test="model.price != null">price= #{model.price},</if>
+			<if test="model.detail != null">detail= #{model.detail},</if>
+			<if test="model.goodsType != null">goodsType= #{model.goodsType},</if>
+			<if test="model.stock != null">stock= #{model.stock},</if>
+			<if test="model.isTop != null">isTop= #{model.isTop},</if>
+			<if test="model.isRecommend != null">isRecommend= #{model.isRecommend},</if>
+			<if test="model.updateTime != null">updateTime= #{model.updateTime},</if>
+			<if test="model.status != null">status= #{model.status},</if>
+			<if test="model.remark != null">remark= #{model.remark},</if>
+			<if test="model.originalPrice != null">originalPrice= #{model.originalPrice}</if>
+		</set>
+		WHERE id = #{id}
+	</update>
 
-	 <!---->
 
 
 	<select id="readById" resultType="com.mall.model.MallGoods">
