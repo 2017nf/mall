@@ -44,16 +44,31 @@ public class BaseUser extends BaseModel {
     private Date loginTime;
     /***微信openid**/
     private String openId;
-
+    /**
+     * 省
+     */
     private String province;
-
+    /**
+     * 市
+     */
     private String county;
-
+    /**
+     * 区
+     */
     private String city;
-
+    /**
+     * 详细地址
+     */
     private String addr;
-
+    /**
+     * 用户账号
+     */
     private Double amount;
+
+    /**
+     * 支付密码
+     */
+    private String payWord;
 
     public Integer getUid() {
         return uid;
@@ -165,5 +180,13 @@ public class BaseUser extends BaseModel {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    public String getPayWord() {
+        return payWord;
+    }
+
+    public void setPayWord(String payWord) {
+        this.payWord = payWord;
     }
 }
