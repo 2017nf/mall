@@ -9,10 +9,12 @@ import com.mall.model.BaseUser;
 import com.mall.model.MallGoods;
 import com.mall.service.BaseUserService;
 import com.mall.util.TokenUtil;
+import com.sun.xml.internal.rngom.parse.host.Base;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,19 +29,6 @@ public class UserController  extends  BaseController{
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
     @Autowired
     private BaseUserService userService;
-
-    /**
-     * 会员列表
-     */
-    @ResponseBody
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public JsonResult list(HttpServletRequest request, BaseUser model, Page page) throws Exception {
-        Token token = TokenUtil.getSessionUser(request);
-        int count = userService.readCount(model);
-        List<BaseUser> goodsList = userService.readList(model, page.getPageNo(), page.getPageSize(), count);
-        PageResult<BaseUser> result = new PageResult<BaseUser>(page.getPageNo(), page.getPageSize(), count, goodsList);
-        return new JsonResult(result);
-    }
 
     @Override
     protected JsonResult index(HttpServletRequest request, BaseModel model, Page page) {
@@ -57,7 +46,15 @@ public class UserController  extends  BaseController{
     }
 
     @Override
-    protected JsonResult list(HttpServletRequest request, BaseModel model, Page page) {
-        return null;
+    @RequestMapping("/list")
+    @ResponseBody
+    protected JsonResult list(HttpServletRequest request , BaseModel model ,Page page) {
+        Token token = TokenUtil.getSessionUser(request);
+        BaseUser m = new BaseUser();
+        int count = userService.readCount(m);
+        List<BaseUser> goodsList = userService.readList( m, page.getPageNo(), page.getPageSize(), count);
+        PageResult<BaseUser> result = new PageResult<BaseUser>(page.getPageNo(), page.getPageSize(), count, goodsList);
+        return new JsonResult(result);
     }
+
 }
