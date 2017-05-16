@@ -98,7 +98,6 @@ public class GoodsController {
 		
 		GoodsVo goodsVo = new GoodsVo();
 		BeanUtils.copyProperties(goodsVo, goods);
-		
 		return new JsonResult(goodsVo);
 	}
     

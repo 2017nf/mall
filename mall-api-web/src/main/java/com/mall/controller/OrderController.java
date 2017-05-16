@@ -4,6 +4,7 @@ import com.mall.common.Token;
 import com.mall.constant.*;
 import com.mall.core.page.JsonResult;
 import com.mall.model.*;
+import com.mall.pay.mini.GenerateMiniOrder;
 import com.mall.pay.wechatpay.GenerateOrder;
 import com.mall.service.*;
 import com.mall.util.OrderNoUtil;
@@ -112,7 +113,7 @@ public class OrderController {
             //微信支付
             String ip = request.getRemoteAddr();
             String attach = token.getId() + "@" + PayType.WEIXINPAY.getCode();
-            GenerateOrder generateOrder = new GenerateOrder();
+            GenerateMiniOrder generateOrder = new GenerateMiniOrder();
             String m = "";
             if (order.getOrderType().intValue() == PURCHASE.getCode().intValue()) {
                 m = order.getPrice() * order.getNum() * 100 + "";
@@ -120,7 +121,7 @@ public class OrderController {
                 m = order.getPrice() * 100 + "";
             }
             String money = m.substring(0, m.indexOf("."));
-            Map<String, String> wxMap = generateOrder.generate(money, ip, attach, order.getOrderNo(), purchaseWeixinNotifyUrl);
+            Map<String, String> wxMap = generateOrder.generate(money, ip, attach, order.getOrderNo(),user.getOpenId(), purchaseWeixinNotifyUrl);
 
             map.put("appid", wxMap.get("appid"));
             map.put("partnerid", wxMap.get("partnerid"));
