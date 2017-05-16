@@ -4,4 +4,7 @@
 <no_authorized>
 	<url>/manage/admin/login</url>
 	<url>/manage/picCode</url>
+	<url>/manage/user/index</url>
+	<url>/manage/user/list</url>
+
 </no_authorized>
