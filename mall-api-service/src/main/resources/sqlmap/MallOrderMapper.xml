@@ -32,7 +32,7 @@
         INSERT INTO <include refid="table"/> (<include refid="fields"/>)
 		VALUES (#{id}, #{orderNo}, #{orderType}, #{userId}, #{storeId}, #{storeName}, #{goodsId}, #{goodsName}, "",
 				 #{icon},  #{price}, #{expressNo}, #{expressName}, #{userName}, #{phone}, #{addr},
-				 #{createTime}, #{updateTime}, #{status}, #{remark}, #{num}, #{shareUserId}, #{payWay})
+				 #{createTime}, #{updateTime}, #{status}, #{remark}, #{num}, #{payWay})
     </insert> 
     <!---->
     <!--<update id="update">-->

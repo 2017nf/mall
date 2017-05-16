@@ -3,8 +3,6 @@ package com.mall.vo;
 import java.io.Serializable;
 
 /**
- * 
- * @author zhuzh
  * @date 2017年2月4日
  */
 public class PurchaseVo implements Serializable {
@@ -23,8 +21,6 @@ public class PurchaseVo implements Serializable {
 	private String addr;
 	/** 商品兑换数量 */
 	private Integer num;
-	/** 分享用户的id */
-	private String shareUserId;
 	/** 支付类型 */
 	private Integer payType;
 
@@ -74,14 +70,6 @@ public class PurchaseVo implements Serializable {
 
 	public void setAddr(String addr) {
 		this.addr = addr;
-	}
-
-	public String getShareUserId() {
-		return shareUserId;
-	}
-
-	public void setShareUserId(String shareUserId) {
-		this.shareUserId = shareUserId;
 	}
 
 	public Integer getPayType() {
