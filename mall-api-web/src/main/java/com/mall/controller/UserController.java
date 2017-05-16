@@ -10,6 +10,7 @@ import com.mall.redis.Strings;
 import com.mall.service.BaseUserService;
 import com.mall.util.*;
 import com.mall.vo.LoginUserVo;
+import com.mall.vo.PayPwdVo;
 import com.mall.vo.UserVo;
 import net.sf.json.JSONObject;
 import org.apache.commons.beanutils.BeanUtils;
@@ -199,5 +200,43 @@ public class UserController {
              return new JsonResult(3, "您的帐号已被禁用");
         }
         return new JsonResult(user);
+    }
+
+    /**
+     * 设置/修改支付密码
+     */
+    @ResponseBody
+    @RequestMapping(value = "/change/payPwd", method = RequestMethod.POST)
+    public JsonResult changePayPwd(HttpServletRequest request, @RequestBody PayPwdVo vo) throws Exception {
+        Token token = TokenUtil.getSessionUser(request);
+        BaseUser user = userService.readById(token.getId());
+        if (StringUtils.isNotBlank(user.getPayWord())) {
+            if (StringUtils.isBlank(vo.getOldPayPwd())) {
+                return new JsonResult(1, "请输入当前支付密码");
+            }
+            if (!user.getPayWord().equals(Md5Util.MD5Encode(vo.getOldPayPwd(), user.getSalt()))) {
+                return new JsonResult(2, "当前支付密码错误");
+            }
+        }
+        if (StringUtils.isBlank(vo.getNewPayPwd())) {
+            return new JsonResult(3, "请输入新支付密码");
+        }
+        if (vo.getNewPayPwd().equals(vo.getOldPayPwd())) {
+            return new JsonResult(4, "新旧支付密码不能相同");
+        }
+        if (vo.getNewPayPwd().length() != 6 || !PasswordUtil.isAllNumeric(vo.getNewPayPwd())) {
+            return new JsonResult(5, "支付密码必须为6纯数字");
+        }
+        if (PasswordUtil.isAllEqualStr(vo.getNewPayPwd())) {
+            return new JsonResult(6, "支付密码必须使用多个数字组合");
+        }
+        if (!vo.getNewPayPwd().equals(vo.getNewPayPwd2())) {
+            return new JsonResult(7, "两次输入新支付密码不一致");
+        }
+        // 更新用户支付密码
+        BaseUser model = new BaseUser();
+        model.setPayWord(Md5Util.MD5Encode(vo.getNewPayPwd(), user.getSalt()));
+        userService.updateById(token.getId(), model);
+        return new JsonResult();
     }
 }

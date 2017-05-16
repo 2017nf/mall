@@ -45,7 +45,7 @@
 
 
 
-	<update id="update">
+	<update id="updateById">
 		UPDATE
 		<include refid="table" />
 		<set>
