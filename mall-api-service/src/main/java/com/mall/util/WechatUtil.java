@@ -40,7 +40,7 @@ public class WechatUtil {
     public static String _YANBAO_MCH_ID = WeChatPay.YANBAO_MCH_ID;// 微信商户ID（炎宝）
     public static String _AppKey = WeChatPay.APP_KEY; // 微信APPkey
     public static String _NOTIFY_URL_H5 = WeChatPay.NOTIFY_URL_H5;//H5微信支付回调地址
-    public static String _body = "斗拍商城支付";
+    public static String BODY = "斗拍商城支付";
     private static final Logger logger = LoggerFactory.getLogger(WechatUtil.class);
     /**
      * 统一下单

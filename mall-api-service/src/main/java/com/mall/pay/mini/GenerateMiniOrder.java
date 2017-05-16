@@ -1,6 +1,8 @@
-package com.mall.pay.h5;
+package com.mall.pay.mini;
 
 import com.alibaba.fastjson.JSON;
+import com.mall.pay.h5.RequestInfo;
+import com.mall.pay.wechatpay.WeChatPay;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import com.mall.util.WechatUtil;
@@ -22,9 +24,14 @@ import java.util.*;
 /**
  * 微信支付
  */
-public class GenerateH5Order {
+public class GenerateMiniOrder {
 
-	private static final Logger logger = LoggerFactory.getLogger(GenerateH5Order.class);
+	private static final Logger logger = LoggerFactory.getLogger(GenerateMiniOrder.class);
+	public static String APP_ID = "wxc129df9d8e6ff47f";// 小程序APPID
+	public static String MCH_ID = "1471793102";// 微信商户ID(小程序)
+	public static String KEY = "BIlntxgR8di4Fbs6sUyUHBsxrNbj2Y6F";// 秘钥key(小程序)
+	public static String NOTIFY_URL_H5 = "https://119.29.216.138:8090";//小程序微信支付回调地址
+	public static String BODY = "英树美妆";
 
 	/**
 	 * 预付单生成
@@ -32,16 +39,16 @@ public class GenerateH5Order {
 	 * @param money
 	 * @return
 	 */
-	public Map<String, String> generate(String money, String ip, String attach,String outTradeNo,String openid) {
+	public Map<String, String> generate(String money, String ip, String attach,String outTradeNo,String openid,String notyfyUrl) {
 		logger.debug("**********outTradeNo*********************");
 		logger.debug(outTradeNo);
 		logger.debug("**********money*********************");
 		logger.debug(money);
 		System.out.println("******100000 money ********** "+money);
-		RequestInfo requestInfo = buildOrderRequestInfo(money,ip,outTradeNo,attach, openid);
+		com.mall.pay.h5.RequestInfo requestInfo = buildOrderRequestInfo(money,ip,outTradeNo,attach, openid,notyfyUrl);
 		String info = buildOrderRequestInfoXml(requestInfo);
 		logger.debug(info);
-		ResponseInfo resp = post(info);
+		com.mall.pay.h5.ResponseInfo resp = post(info);
 		if (resp==null) {
 			throw new RuntimeException("微信支付出错");
 		}
@@ -57,21 +64,21 @@ public class GenerateH5Order {
 	 *
 	 * @return
 	 */
-	public RequestInfo buildOrderRequestInfo(String money, String ip, String outTradeNo, String attach,String openid) {
+	public com.mall.pay.h5.RequestInfo buildOrderRequestInfo(String money, String ip, String outTradeNo, String attach, String openid,String notyfyUrl) {
 		// 生成订单对象
-		RequestInfo unifiedOrderRequest = new RequestInfo();
+		com.mall.pay.h5.RequestInfo unifiedOrderRequest = new com.mall.pay.h5.RequestInfo();
 		unifiedOrderRequest.setAttach(attach);
-		unifiedOrderRequest.setAppid(WechatUtil.YANBAO_APPID);// 公众账号ID
-		unifiedOrderRequest.setMch_id(WechatUtil._YANBAO_MCH_ID);// 商户号
+		unifiedOrderRequest.setAppid(APP_ID);// 小程序APPID
+		unifiedOrderRequest.setMch_id(MCH_ID);// 商户号
 		unifiedOrderRequest.setNonce_str(UUID.randomUUID().toString().replace("-", ""));// 随机字符串
 		//公众号H5支付增加参数openid
 		unifiedOrderRequest.setOpenid(openid);
-		unifiedOrderRequest.setBody(WechatUtil.BODY);
+		unifiedOrderRequest.setBody(BODY);
 		// 商品描述
 		unifiedOrderRequest.setOut_trade_no(outTradeNo);// 商户订单号
 		unifiedOrderRequest.setTotal_fee(money); // 金额需要扩大100倍:1代表支付时是0.01
 		unifiedOrderRequest.setSpbill_create_ip(ip);// 终端IP
-		unifiedOrderRequest.setNotify_url(WechatUtil._NOTIFY_URL_H5);// 通知地址
+		unifiedOrderRequest.setNotify_url(notyfyUrl);// 通知地址
 		unifiedOrderRequest.setTrade_type("JSAPI");// JSAPI--公众号支付、NATIVE--原生扫码支付、APP--app支付
 		SortedMap<String, String> packageParams = new TreeMap<String, String>();
 		packageParams.put("appid", unifiedOrderRequest.getAppid());
@@ -94,10 +101,10 @@ public class GenerateH5Order {
 	 *
 	 * @return
 	 */
-	public String buildOrderRequestInfoXml(RequestInfo requestInfo) {
+	public String buildOrderRequestInfoXml(com.mall.pay.h5.RequestInfo requestInfo) {
 		// 将订单对象转为xml格式
 		XStream xStream = new XStream(new DomDriver("utf-8"));
-		xStream.alias("xml", RequestInfo.class);// 根元素名需要是xml
+		xStream.alias("xml", com.mall.pay.h5.RequestInfo.class);// 根元素名需要是xml
 		return xStream.toXML(requestInfo).replace("__", "_");
 	}
 
@@ -108,7 +115,7 @@ public class GenerateH5Order {
 	 */
 	public String buildQueryOrderInfo(String outTradeNo ) {
 		// 生成订单对象
-		RequestInfo unifiedOrderRequest = new RequestInfo();
+		com.mall.pay.h5.RequestInfo unifiedOrderRequest = new com.mall.pay.h5.RequestInfo();
 		QueryOrderVo orderVo = new QueryOrderVo();
 		orderVo.setAppid(WechatUtil.YANBAO_APPID);// 公众账号ID
 		orderVo.setMch_id(WechatUtil._YANBAO_MCH_ID);// 商户号
@@ -148,15 +155,15 @@ public class GenerateH5Order {
 	 * @param orderInfo
 	 * @return
 	 */
-	public ResponseInfo post(String orderInfo) {
+	public com.mall.pay.h5.ResponseInfo post(String orderInfo) {
 		String url = "https://api.mch.weixin.qq.com/pay/unifiedorder";
 		try {
 			StringBuffer sb=getRequestXml(url,orderInfo);
 			XStream xStream = new XStream(new DomDriver("UTF-8"));// 说明3(见文末)
 			// 将请求返回的内容通过xStream转换为UnifiedOrderRespose对象
 			System.out.println(sb.toString());
-			xStream.alias("xml", ResponseInfo.class);
-			ResponseInfo unifiedOrderRespose = (ResponseInfo) xStream.fromXML(sb.toString());
+			xStream.alias("xml", com.mall.pay.h5.ResponseInfo.class);
+			com.mall.pay.h5.ResponseInfo unifiedOrderRespose = (com.mall.pay.h5.ResponseInfo) xStream.fromXML(sb.toString());
 			// 根据微信文档return_code 和result_code都为SUCCESS的时候才会返回code_url
 			if (null != unifiedOrderRespose && "SUCCESS".equals(unifiedOrderRespose.getReturn_code()) && "SUCCESS".equals(unifiedOrderRespose.getResult_code())) {
 				logger.error("****************xml********************");
@@ -202,7 +209,7 @@ public class GenerateH5Order {
 	 * @param resp
 	 * @return
 	 */
-	public Map<String, String> buildResponseInfoOut(ResponseInfo resp) {
+	public Map<String, String> buildResponseInfoOut(com.mall.pay.h5.ResponseInfo resp) {
 		SortedMap<String, String> parameters = new TreeMap<String, String>();
 		Long tsLong = System.currentTimeMillis() / 1000;
 		String ts = tsLong.toString();
@@ -236,7 +243,7 @@ public class GenerateH5Order {
 			}
 		}
 		// 第二步拼接key，key设置路径：微信商户平台(pay.weixin.qq.com)-->账户设置-->API安全-->密钥设置
-		sb.append("key=" + WechatUtil.YANBAO_KEY);
+		sb.append("key=" + KEY);
 		String sign = DigestUtils.md5Hex(sb.toString()).toUpperCase();// MD5加密
 		return sign;
 	}
@@ -295,12 +302,12 @@ public class GenerateH5Order {
 		map.put("mch_id","1425023102");
 		map.put("nonce_str","3adad1ee55f149efbde23b88ec831a99");
 		map.put("out_trade_no","20170401193127001037");
-		RequestInfo  requestInfo = new RequestInfo();
+		com.mall.pay.h5.RequestInfo requestInfo = new RequestInfo();
 		requestInfo.setOpenid("test");
 		requestInfo.setOut_trade_no("tttttt");
 
-		GenerateH5Order generateOrder = new GenerateH5Order();
-		Map map1= generateOrder.generate("5500.0","113.76.115.37","test","test112345678","ouH4bs_JG0XvtFfvLQZUDnWHPCl0");
+		GenerateMiniOrder generateOrder = new GenerateMiniOrder();
+		Map map1= generateOrder.generate("5500","113.76.115.37","test","test112345678","ouH4bs_JG0XvtFfvLQZUDnWHPCl0","notyfyUrl");
 		System.out.println(JSON.toJSON(map1));
 
 

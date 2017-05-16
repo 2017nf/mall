@@ -27,7 +27,7 @@ public class UploadController {
     @ResponseBody
     public JsonResult pageSysManUser(HttpServletRequest request, HttpServletResponse response, String folderName) {
         Map<String, String> map = new HashMap<String, String>();
-//        map.put("token", QiNiuUtil.getToken(folderName));
+        map.put("token", QiNiuUtil.getToken(folderName));
         if (StringUtils.isEmpty(folderName)){
             map.put("domain", PropertiesUtil.getDomain("prefix"));
         }else {

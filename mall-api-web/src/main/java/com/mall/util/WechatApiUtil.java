@@ -5,8 +5,6 @@ import net.sf.json.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 
- * @author zhuzih
  * @date 2015年11月26日
  */
 public class WechatApiUtil {
