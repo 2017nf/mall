@@ -6,5 +6,7 @@
 	<url>/manage/picCode</url>
 	<url>/manage/user/index</url>
 	<url>/manage/user/list</url>
+	<url>/manage/order/list</url>
+	<url>/manage/finance/list</url>
 
 </no_authorized>
