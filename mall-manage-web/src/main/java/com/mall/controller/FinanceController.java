@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -35,6 +37,8 @@ public class FinanceController extends BaseController {
      * @throws Exception
      */
     @Override
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @ResponseBody
     protected JsonResult index(HttpServletRequest request, Object model, Page page) throws Exception {
         //分页查询财务流水记录
         PageResult<MallRecord> recordList = mallRecordService.getPage(new MallRecord(), page);
