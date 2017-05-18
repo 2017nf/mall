@@ -66,7 +66,7 @@ public class OrderController extends BaseController<MallOrder> {
      * @param model
      * @return
      */
-    @RequestMapping("/index")
+    @RequestMapping("/add")
     @ResponseBody
     protected JsonResult add(HttpServletRequest request, MallOrder model) throws  Exception{
         return null;
@@ -78,7 +78,7 @@ public class OrderController extends BaseController<MallOrder> {
      * @param model
      * @return
      */
-    @RequestMapping("/index")
+    @RequestMapping("/edit")
     @ResponseBody
     protected JsonResult edit(HttpServletRequest request, MallOrder model) throws  Exception{
         return null;

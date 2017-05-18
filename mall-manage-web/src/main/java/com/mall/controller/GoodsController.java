@@ -153,7 +153,7 @@ public class GoodsController extends BaseController<MallGoods>{
      * 商品列表
      */
     @ResponseBody
-    @RequestMapping(value = "/goodslist", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     @Override
     public JsonResult list(HttpServletRequest request, MallGoods model, Page page) {
         int count = goodsService.readCount(model);
