@@ -14,14 +14,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * 订单controller
  */
 @Controller
 @RequestMapping("/order")
-public class OrderController extends BaseController<MallOrder> {
+public class OrderController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
 
@@ -31,56 +30,35 @@ public class OrderController extends BaseController<MallOrder> {
 
     /**
      * 分页获取订单列表
+     *
      * @param request
      * @param page
      * @return
      * @throws Exception
      */
+
+    @Override
+    protected JsonResult index(HttpServletRequest request, Object model, Page page) throws Exception {
+        return null;
+    }
+
+    @Override
+    protected JsonResult add(HttpServletRequest request, Object model) throws Exception {
+        return null;
+    }
+
+    @Override
+    protected JsonResult edit(HttpServletRequest request, Object model) throws Exception {
+        return null;
+    }
+
+    @Override
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     @ResponseBody
-    protected JsonResult list(HttpServletRequest request, MallOrder model, Page page) throws  Exception {
-
+    protected JsonResult list(HttpServletRequest request, Object model, Page page) throws Exception {
         //查询订单列表
-        PageResult<MallOrder> orderList = mallOrderService.getPage(model,page);
-
+        PageResult<MallOrder> orderList = mallOrderService.getPage(new MallOrder(), page);
         //返回订单列表
         return new JsonResult(orderList);
-    }
-
-    /**
-     *
-     * @param request
-     * @param model
-     * @param page
-     * @return
-     */
-    @RequestMapping("/index")
-    @ResponseBody
-    protected JsonResult index(HttpServletRequest request, MallOrder model, Page page) throws  Exception{
-        return null;
-    }
-
-    /**
-     *
-     * @param request
-     * @param model
-     * @return
-     */
-    @RequestMapping("/add")
-    @ResponseBody
-    protected JsonResult add(HttpServletRequest request, MallOrder model) throws  Exception{
-        return null;
-    }
-
-    /**
-     *
-     * @param request
-     * @param model
-     * @return
-     */
-    @RequestMapping("/edit")
-    @ResponseBody
-    protected JsonResult edit(HttpServletRequest request, MallOrder model) throws  Exception{
-        return null;
     }
 }

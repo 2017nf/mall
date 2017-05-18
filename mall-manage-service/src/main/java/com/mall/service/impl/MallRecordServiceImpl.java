@@ -5,7 +5,6 @@ import com.mall.core.page.Page;
 import com.mall.core.page.PageResult;
 import com.mall.core.service.impl.CommonServiceImpl;
 import com.mall.mapper.MallRecordMapper;
-import com.mall.model.MallOrder;
 import com.mall.model.MallRecord;
 import com.mall.service.MallRecordService;
 import org.apache.commons.beanutils.BeanUtils;
@@ -17,7 +16,6 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @author ZHUZIHUI
  * @date 2016年11月27日
  */
 @Service
@@ -37,20 +35,21 @@ public class MallRecordServiceImpl extends CommonServiceImpl<MallRecord> impleme
 
     /**
      * 分页查询财务流水记录
+     *
      * @param model
      * @param page
      * @return
      */
     @Override
-    public PageResult<MallRecord> getPage(MallRecord model, Page page) throws Exception{
+    public PageResult<MallRecord> getPage(MallRecord model, Page page) throws Exception {
         PageResult<MallRecord> pageResult = new PageResult<MallRecord>();
         BeanUtils.copyProperties(pageResult, page);
         Integer count = mallRecordDao.readCount(model);
         pageResult.setTotalSize(count);
         if (count != null && count > 0) {
-            List<MallRecord> list = mallRecordDao.readList(model,page.getStartRow(),page.getPageSize());
+            List<MallRecord> list = mallRecordDao.readList(model, page.getStartRow(), page.getPageSize());
             if (CollectionUtils.isEmpty(list)) {
-                list= Collections.EMPTY_LIST;
+                list = Collections.EMPTY_LIST;
             }
             pageResult.setRows(list);
         }

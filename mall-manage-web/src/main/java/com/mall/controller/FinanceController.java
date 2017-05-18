@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/finance")
-public class FinanceController extends BaseController<MallRecord> {
+public class FinanceController extends BaseController {
 
     private static final Logger logger = LoggerFactory.getLogger(FinanceController.class);
 
@@ -28,35 +29,36 @@ public class FinanceController extends BaseController<MallRecord> {
 
     /**
      * 分页查询财务流水记录
+     *
      * @param request
      * @param model
      * @param page
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/list",method = RequestMethod.GET)
     @Override
-    protected JsonResult list(HttpServletRequest request, MallRecord model, Page page) throws Exception {
-
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @ResponseBody
+    protected JsonResult index(HttpServletRequest request, Object model, Page page) throws Exception {
         //分页查询财务流水记录
-        PageResult<MallRecord> recordList = mallRecordService.getPage(model,page);
+        PageResult<MallRecord> recordList = mallRecordService.getPage(new MallRecord(), page);
 
         //返回财务流水记录
         return new JsonResult(recordList);
     }
 
     @Override
-    protected JsonResult index(HttpServletRequest request, MallRecord model, Page page) throws Exception {
+    protected JsonResult add(HttpServletRequest request, Object model) throws Exception {
         return null;
     }
 
     @Override
-    protected JsonResult add(HttpServletRequest request, MallRecord model) throws Exception {
+    protected JsonResult edit(HttpServletRequest request, Object model) throws Exception {
         return null;
     }
 
     @Override
-    protected JsonResult edit(HttpServletRequest request, MallRecord model) throws Exception {
+    protected JsonResult list(HttpServletRequest request, Object model, Page page) throws Exception {
         return null;
     }
 }

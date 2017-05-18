@@ -26,7 +26,6 @@
 			<if test="model.id != null">AND id= #{model.id}</if>
 			<if test="model.unionId != null">AND unionId= #{model.unionId}</if>
 			<if test="model.openId != null">AND openId= #{model.openId}</if>
-			<if test="model.weixin != null">AND weixin= #{model.weixin}</if>
 			<if test="model.phone != null">AND phone= #{model.phone}</if>
 			<if test="model.status != null">AND status= #{model.status}</if>
 			<if test="model.openId != null">AND openId= #{model.openId}</if>

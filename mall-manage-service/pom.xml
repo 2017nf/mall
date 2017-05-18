@@ -23,10 +23,5 @@
 			<artifactId>jiguang-common</artifactId>
 			<version>1.0.1</version>
 		</dependency>
-        <dependency>
-            <groupId>com.yanbao</groupId>
-            <artifactId>mall-api-service</artifactId>
-            <version>1.0.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 </project>
