@@ -9,4 +9,5 @@
 	<url>/manage/order/list</url>
 	<url>/manage/finance/list</url>
 
+	<url>/manage/goods/list</url>
 </no_authorized>
