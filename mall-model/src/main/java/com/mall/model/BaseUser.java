@@ -70,6 +70,9 @@ public class BaseUser extends BaseModel {
      */
     private String payWord;
 
+
+
+
     public Integer getUid() {
         return uid;
     }

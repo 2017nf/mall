@@ -5,7 +5,6 @@ import com.mall.constant.RedisKey;
 import com.mall.constant.StatusType;
 import com.mall.core.page.JsonResult;
 import com.mall.model.BaseUser;
-import com.mall.redis.Sets;
 import com.mall.redis.Strings;
 import com.mall.service.BaseUserService;
 import com.mall.util.*;
@@ -49,7 +48,7 @@ public class UserController {
      */
     @ResponseBody
     @RequestMapping(value = "/token", method = RequestMethod.GET)
-    public JsonResult loginByWeixin(HttpServletRequest request,String id) throws Exception {
+    public JsonResult loginByWeixin(HttpServletRequest request, String id) throws Exception {
         if (StringUtils.isBlank(id)) {
             return new JsonResult(-1, "id不能為空");
         }
@@ -89,6 +88,10 @@ public class UserController {
             user.setSex(vo.getSex());
             user.setHeadImgUrl(vo.getHeadImgUrl());
             user.setSalt(System.currentTimeMillis() + "");
+            user.setProvince(vo.getProvince());
+            user.setCity(vo.getCity());
+            user.setCounty(vo.getCounty());
+            user.setRemark(vo.getEncryptedData());
             userService.create(user);
         }
 
@@ -197,7 +200,7 @@ public class UserController {
             return new JsonResult(2, "无法找到用户信息");
         }
         if (user.getStatus() == StatusType.FALSE.getCode()) {
-             return new JsonResult(3, "您的帐号已被禁用");
+            return new JsonResult(3, "您的帐号已被禁用");
         }
         return new JsonResult(user);
     }

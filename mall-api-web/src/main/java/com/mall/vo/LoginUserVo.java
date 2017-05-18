@@ -36,9 +36,30 @@ public class LoginUserVo {
 
     private String city;
 
+    private String county;
+
     private String addr;
 
+    private String encryptedData;
+
     private String token;
+
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
+    }
+
+    public String getEncryptedData() {
+        return encryptedData;
+    }
+
+    public void setEncryptedData(String encryptedData) {
+        this.encryptedData = encryptedData;
+    }
 
     public String getToken() {
         return token;
