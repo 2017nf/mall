@@ -1,5 +1,7 @@
 package com.mall.vo;
 
+import com.mall.constant.StatusType;
+
 import java.util.Date;
 
 /**
@@ -77,6 +79,10 @@ public class GoodsVo {
      * 状态
      */
     private Integer status;
+    /**
+     * 状态
+     */
+    private String statusName;
 
     /**
      * 备注
@@ -214,6 +220,17 @@ public class GoodsVo {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+        switch (status){
+            case 0:
+                setStatusName("下架");
+                break;
+            case 1:
+                setStatusName("上架");
+                break;
+            default:
+                setStatusName("删除");
+                break;
+        }
 	}
 
 	public String getRemark() {
@@ -230,5 +247,13 @@ public class GoodsVo {
 
     public void setAmount(Integer amount) {
         this.amount = amount;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
     }
 }

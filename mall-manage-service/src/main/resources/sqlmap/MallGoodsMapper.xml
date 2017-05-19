@@ -26,6 +26,7 @@
 			<if test="model.isRecommend != null">AND isRecommend= #{model.isRecommend}</if>
 			<if test="model.name != null">AND name= #{model.name}</if>
 			<if test="model.status != null">AND status= #{model.status}</if>
+			<if test="model.status == null">AND status != 2</if>
 		</where>
 	</sql>
 
@@ -96,6 +97,14 @@
 		update
 		<include refid="table"/>
 		set status = 1,updateTime=now() where id = #{id}
+	</update>
+
+
+	<update id="batchDel" parameterType="java.util.List">
+		update
+		<include refid="table"/>
+		set status = 2,updateTime=now() where id in
+		<foreach collection="ids" index="index" item="item" open="(" separator="," close=")"> #{item} </foreach>
 	</update>
 </mapper>
 

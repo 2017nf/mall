@@ -10,4 +10,5 @@
 	<url>/manage/finance/list</url>
 
 	<url>/manage/goods/list</url>
+	<url>/manage/goods/batchDel</url>
 </no_authorized>
