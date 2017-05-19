@@ -15,11 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -155,10 +155,36 @@ public class GoodsController extends BaseController<MallGoods>{
     @ResponseBody
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @Override
-    public JsonResult list(HttpServletRequest request, MallGoods model, Page page) {
+    public JsonResult list(HttpServletRequest request, MallGoods model, Page page) throws Exception {
         int count = goodsService.readCount(model);
         List<MallGoods> goodsList = goodsService.readList(model, page.getPageNo(), page.getPageSize(), count);
-        PageResult<MallGoods> result = new PageResult<MallGoods>(page.getPageNo(), page.getPageSize(), count, goodsList);
+        List<GoodsVo> voList = new ArrayList<GoodsVo>();
+        for(MallGoods goods : goodsList){
+            GoodsVo vo = new GoodsVo();
+            BeanUtils.copyProperties(vo,goods);
+            voList.add(vo);
+        }
+        PageResult<GoodsVo> result = new PageResult<GoodsVo>(page.getPageNo(), page.getPageSize(), count, voList);
         return new JsonResult(result);
+    }
+
+
+
+    /**
+     * 批量删除
+     */
+    @ResponseBody
+    @RequestMapping(value = "/batchDel", method = RequestMethod.POST)
+    public JsonResult batchDel(HttpServletRequest request, @RequestParam(value = "ids[]")String[] ids) throws Exception{
+
+        if (ids == null || ids.length <=0) {
+            return new JsonResult(1, "请选择要删除的选项");
+        }
+        List<String> list = new ArrayList<String>();
+        for(String id : ids){
+            list.add(id);
+        }
+        goodsService.batchDel(list);
+        return new JsonResult();
     }
 }

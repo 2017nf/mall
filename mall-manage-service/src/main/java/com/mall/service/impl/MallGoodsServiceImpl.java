@@ -7,6 +7,9 @@ import com.mall.model.MallGoods;
 import com.mall.service.MallGoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @date 2016年11月27日
@@ -23,5 +26,11 @@ public class MallGoodsServiceImpl extends CommonServiceImpl<MallGoods> implement
     @Override
     protected Class<MallGoods> getModelClass() {
         return MallGoods.class;
+    }
+
+    @Override
+    @Transactional
+    public void batchDel(List<String> ids) {
+        mallGoodsDao.batchDel(ids);
     }
 }
