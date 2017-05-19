@@ -37,14 +37,8 @@ public class FinanceController extends BaseController {
      * @throws Exception
      */
     @Override
-    @RequestMapping(value = "/list",method = RequestMethod.GET)
-    @ResponseBody
     protected JsonResult index(HttpServletRequest request, Object model, Page page) throws Exception {
-        //分页查询财务流水记录
-        PageResult<MallRecord> recordList = mallRecordService.getPage(new MallRecord(), page);
-
-        //返回财务流水记录
-        return new JsonResult(recordList);
+        return  null;
     }
 
     @Override
@@ -58,7 +52,13 @@ public class FinanceController extends BaseController {
     }
 
     @Override
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @ResponseBody
     protected JsonResult list(HttpServletRequest request, Object model, Page page) throws Exception {
-        return null;
+        //分页查询财务流水记录
+        PageResult<MallRecord> recordList = mallRecordService.getPage(new MallRecord(), page);
+
+        //返回财务流水记录
+        return new JsonResult(recordList);
     }
 }

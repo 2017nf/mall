@@ -30,9 +30,11 @@ public class UploadController {
         map.put("token", QiNiuUtil.getToken(folderName));
         if (StringUtils.isEmpty(folderName)){
             map.put("domain", PropertiesUtil.getDomain("prefix"));
-        }else {
-            map.put("domain", PropertiesUtil.getDomain(folderName));
         }
+//        else {
+//            map.put("domain", PropertiesUtil.getDomain(folderName));
+//        }
+        map.put("domain", "http://www.baidu.com");
         return new JsonResult(map);
     }
 
