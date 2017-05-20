@@ -8,6 +8,7 @@ import com.mall.service.BaseAdminService;
 import com.mall.util.Md5Util;
 import com.mall.util.TokenUtil;
 import com.mall.vo.LoginVo;
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -64,6 +65,10 @@ public class LoginController {
         map.put("userName", admin.getUserName());
         map.put("id", admin.getId());
         return new JsonResult(map);
+    }
+
+    public static void main(String[] args) {
+        System.out.println(Md5Util.MD5Encode("1234","111"));
     }
 
 }
