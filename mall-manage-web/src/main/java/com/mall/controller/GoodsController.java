@@ -39,8 +39,10 @@ public class GoodsController extends BaseController<MallGoods>{
     @ResponseBody
     @RequestMapping(value = "/sortlist", method = RequestMethod.GET)
     public JsonResult goodsSorts(HttpServletRequest request, MallSort model) throws Exception {
-        List<MallSort> list = goodsSortService.readList(model, 1, 100, 100);
-        return new JsonResult(list);
+        Integer totalSize = goodsSortService.readCount(model);
+        List<MallSort> list = goodsSortService.readList(model, 1, 100, totalSize);
+        PageResult<MallSort> page = new PageResult<>(1,100,totalSize,list);
+        return new JsonResult(page);
     }
 
     /**
