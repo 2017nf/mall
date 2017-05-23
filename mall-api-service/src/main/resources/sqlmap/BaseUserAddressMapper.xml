@@ -4,7 +4,7 @@
 <mapper namespace="com.mall.mapper.BaseUserAddressMapper">
 
 	<sql id="fields">
-		id, userId ,province,city,county,addr,
+		id, userId ,userName,phone,province,city,county,addr,
 		createTime, updateTime, status, remark
 	</sql>
 
@@ -24,13 +24,14 @@
 			<if test="model.status != null">AND status= #{model.status}</if>
 		</where>
 	</sql>
+
 	<insert id="create" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO
 		<include refid="table" />
 		(
 		<include refid="fields" />
 		)
-		VALUES (#{id}, #{userId}, #{province},#{city},#{county},#{addr},
+		VALUES (#{id}, #{userId},#{userName},#{phone}, #{province},#{city},#{county},#{addr},
 		         #{createTime}, #{updateTime}, #{status}, #{remark})
 	</insert>
 

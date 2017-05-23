@@ -20,6 +20,10 @@ public class BaseUserAddress extends BaseModel {
 	private String county;
 	/** 详细地址 */
 	private String addr;
+	/** 收货人姓名 */
+	private String userName;
+	/** 收货人电话 */
+	private String phone;
 
 	public String getUserId() {
 		return userId;
@@ -59,5 +63,21 @@ public class BaseUserAddress extends BaseModel {
 
 	public void setAddr(String addr) {
 		this.addr = addr;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 }

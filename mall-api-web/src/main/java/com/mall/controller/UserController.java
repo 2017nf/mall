@@ -82,7 +82,7 @@ public class UserController {
             user = new BaseUser();
             user.setNickName(nickName);
             user.setId(UUIDUtil.getUUID());
-            user.setOpenId(vo.getOpenId());
+            user.setOpenId(vo.getUnionId());//openid  set值成 unoinid
             user.setUnionId(vo.getUnionId());
             user.setLoginTime(new Date());
             user.setSex(vo.getSex());
@@ -92,6 +92,7 @@ public class UserController {
             user.setCity(vo.getCity());
             user.setCounty(vo.getCounty());
             user.setRemark(vo.getEncryptedData());
+            user.setStatus(1);//默认启用
             userService.create(user);
         }
 

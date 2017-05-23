@@ -57,9 +57,9 @@ public class BaseUserAddressController {
     	String province = address.getProvince();
     	String county = address.getCounty();
     	String city = address.getCity();
-    	
+
     	if(StringUtils.isEmpty(addr)){
-    		return new JsonResult(2,"详细地址不能为空");
+    		return new JsonResult(3,"详细地址不能为空");
     	}
 /*    	if(StringUtils.isEmpty(province)){
     		return new JsonResult(3,"省份不能为空");

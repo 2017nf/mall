@@ -130,7 +130,7 @@ public class OrderController {
             map.put("timestamp", wxMap.get("timestamp"));
             map.put("package", wxMap.get("package"));
             map.put("prepayid", wxMap.get("prepayid"));
-            map.put("sign", wxMap.get("sign"));
+            map.put("sign", wxMap.get("paySign"));
         } else if (source == PayType.BALANCEPAY.getCode().intValue()) {
             if (StringUtils.isBlank(user.getPayWord())) {
                 return new JsonResult(2, "请先设置支付密码");
@@ -252,7 +252,7 @@ public class OrderController {
             map.put("timestamp", wxMap.get("timestamp"));
             map.put("package", wxMap.get("package"));
             map.put("prepayid", wxMap.get("prepayid"));
-            map.put("sign", wxMap.get("sign"));
+            map.put("sign", wxMap.get("paySign"));
 
 
         } else if (order.getPayWay().intValue() == PayType.BALANCEPAY.getCode().intValue()) {
