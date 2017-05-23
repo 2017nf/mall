@@ -22,23 +22,6 @@ public class BaseUserJoinInfoController {
 	
 	@Autowired
 	private BaseUserJoinInfoService baseUserJoinInfoService;
-	
-	
-	/**
-     * 加盟用户列表
-     */
-    @ResponseBody
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public JsonResult joinInfoList(HttpServletRequest request) throws Exception {
-        Token token = TokenUtil.getSessionUser(request);
-    	
-//    	Token token = (Token) TokenUtil.getTokenObject("eyJuaWNrTmFtZSI6IuadsCIsImlkIjoiRjJDRURGMjIxMEMyNDNDNEE5M0YyODZEMjE2NTY5RUEiLCJ0aW1lIjoxNDk0NzUwNjAwMDcyfQ**");
-        
-        List<BaseUserJoinInfo> joinInfoList = baseUserJoinInfoService.getJoinInfoListByUserId(token.getId());
-
-        return new JsonResult(joinInfoList);
-        
-    }
     
 	/**
      * 新增加盟用户
@@ -56,7 +39,6 @@ public class BaseUserJoinInfoController {
             return new JsonResult(1,"加盟用户电话不能为空");
         }
 
-        joinInfo.setUserId(token.getId());
         joinInfo.setStatus(1);
 
         baseUserJoinInfoService.create(joinInfo);

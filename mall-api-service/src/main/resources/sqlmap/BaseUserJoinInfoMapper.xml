@@ -4,7 +4,7 @@
 <mapper namespace="com.mall.mapper.BaseUserJoinInfoMapper">
 
 	<sql id="fields">
-		id,userId,userName,phone,createTime, updateTime, status, remark
+		id,userName,phone,createTime, updateTime, status, remark
 	</sql>
 
 	<sql id="table">base_user_joinInfo</sql>
@@ -44,14 +44,6 @@
 		ORDER BY createTime DESC
 		limit #{startRow}, #{pageSize};
 	</select>
-	
-	<select id="getJoinInfoListByUserId" resultType="com.mall.model.BaseUserJoinInfo">
-		<include refid="selector"/>
-		where userId=#{userId}
-		ORDER BY createTime DESC
-		limit 10;
-	</select>
-
 
 	<select id="readCount" resultType="int">
 		select count(1) from

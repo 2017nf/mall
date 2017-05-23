@@ -11,9 +11,6 @@ public class BaseUserJoinInfo extends BaseModel{
 
     private static final long serialVersionUID = 24149337328156052L;
 
-    /** 加盟用户id */
-    private String userId;
-
     /** 加盟用户姓名 */
     private String userName;
 
@@ -36,11 +33,4 @@ public class BaseUserJoinInfo extends BaseModel{
         this.phone = phone;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 }

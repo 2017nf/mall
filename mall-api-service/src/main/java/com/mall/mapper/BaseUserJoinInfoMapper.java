@@ -11,6 +11,4 @@ import java.util.List;
 @Repository
 public interface BaseUserJoinInfoMapper extends CommonDao<BaseUserJoinInfo> {
 
-	List<BaseUserJoinInfo> getJoinInfoListByUserId(@Param("userId") String userId);
-
 }

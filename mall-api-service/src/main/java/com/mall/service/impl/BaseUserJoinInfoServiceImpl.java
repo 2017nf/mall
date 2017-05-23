@@ -32,13 +32,4 @@ public class BaseUserJoinInfoServiceImpl extends CommonServiceImpl<BaseUserJoinI
         return BaseUserJoinInfo.class;
     }
 
-	@Override
-	public List<BaseUserJoinInfo> getJoinInfoListByUserId(String userId) {
-		
-		List<BaseUserJoinInfo> addrList = null;
-		
-		addrList = baseUserJoinInfoDao.getJoinInfoListByUserId(userId);
-		
-		return CollectionUtils.isEmpty(addrList) ? new ArrayList<BaseUserJoinInfo>(0) : addrList;
-	}
 }

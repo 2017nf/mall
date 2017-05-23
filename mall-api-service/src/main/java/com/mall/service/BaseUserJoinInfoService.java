@@ -11,6 +11,4 @@ import java.util.List;
  */
 public interface BaseUserJoinInfoService extends CommonService<BaseUserJoinInfo> {
 	
-	public List<BaseUserJoinInfo> getJoinInfoListByUserId(String userId);
-	
 }
