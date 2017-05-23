@@ -124,10 +124,11 @@ public class OrderController {
             String money = m.substring(0, m.indexOf("."));
             Map<String, String> wxMap = generateOrder.generate(money, ip, attach, order.getOrderNo(),user.getOpenId(), purchaseWeixinNotifyUrl);
 
-            map.put("appid", wxMap.get("appid"));
+
+            map.put("appid", wxMap.get("appId"));
             map.put("partnerid", wxMap.get("partnerid"));
-            map.put("noncestr", wxMap.get("noncestr"));
-            map.put("timestamp", wxMap.get("timestamp"));
+            map.put("noncestr", wxMap.get("nonceStr"));
+            map.put("timestamp", wxMap.get("timeStamp"));
             map.put("package", wxMap.get("package"));
             map.put("prepayid", wxMap.get("prepayid"));
             map.put("sign", wxMap.get("paySign"));
