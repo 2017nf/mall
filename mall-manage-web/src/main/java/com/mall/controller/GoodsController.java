@@ -143,6 +143,9 @@ public class GoodsController extends BaseController<MallGoods>{
         if (model.getStock() != null && model.getStock() < 1) {
             return new JsonResult(6, "商品库存不能小于1件");
         }
+        if("".equalsIgnoreCase(model.getIcon())){
+            model.setIcon(null);
+        }
 
         MallGoods editGoods = new MallGoods();
         BeanUtils.copyProperties(editGoods,model);
