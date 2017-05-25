@@ -14,6 +14,7 @@
 	<url>/user/token</url>
 	<url>/user/userinfo</url>
 	<url>/joinInfo/add</url>
+	<url>/order/list</url>
 
 
 	<!-- 静态资源-->

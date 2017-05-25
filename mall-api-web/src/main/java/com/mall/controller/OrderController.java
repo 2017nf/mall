@@ -3,6 +3,8 @@ package com.mall.controller;
 import com.mall.common.Token;
 import com.mall.constant.*;
 import com.mall.core.page.JsonResult;
+import com.mall.core.page.Page;
+import com.mall.core.page.PageResult;
 import com.mall.model.*;
 import com.mall.pay.mini.GenerateMiniOrder;
 import com.mall.pay.wechatpay.GenerateOrder;
@@ -411,6 +413,24 @@ public class OrderController {
         return new JsonResult(voList);
     }
 
+
+    /**
+     * 分页获取订单列表
+     *
+     * @param request
+     * @param page
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @ResponseBody
+    public JsonResult list(HttpServletRequest request, MallOrder mallOrder, Page page) throws Exception {
+
+        //查询订单列表
+        PageResult<MallOrder> orderList = orderService.getPage(mallOrder,page);
+        //返回订单列表
+        return new JsonResult(orderList);
+    }
 
 }
 
