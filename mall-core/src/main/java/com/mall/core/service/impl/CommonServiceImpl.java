@@ -149,7 +149,7 @@ public abstract class CommonServiceImpl<M extends BaseModel> {
             if (dbModel == null) return;
             defaultUpdate(model);
             getDao().updateById(id, model);
-            processCacheAfterUpdateById(id, dbModel);
+            //processCacheAfterUpdateById(id, dbModel);
         } catch (Exception e) {
             if (logger.isErrorEnabled()) {
                 logger.error("[Layer:DB]_[Method:updateById]_[Info:Model:" + getModelName() + "#ID:" + id + "]", e);
@@ -175,8 +175,11 @@ public abstract class CommonServiceImpl<M extends BaseModel> {
     public void defaultCreate(M model) {
 	 try {
          Integer status = model.getStatus();
+         String remark = model.getRemark();
          status = status == null ? 0:status;
+         remark = remark == null ? "":remark;
          model.setStatus(status);
+         model.setRemark(remark);
          if (StringUtils.isEmpty(model.getId())){
              model.setId(UUIDUtil.getUUID());
          }
@@ -191,8 +194,11 @@ public abstract class CommonServiceImpl<M extends BaseModel> {
     public void defaultUpdate(M model) {
         try {
             Integer status = model.getStatus();
+            String remark = model.getRemark();
             status = status == null ? 0:status;
+            remark = remark == null ? "":remark;
             model.setStatus(status);
+            model.setRemark(remark);
             model.setUpdateTime(new Date());
         } catch (Exception e) {
             model.setStatus(1);
