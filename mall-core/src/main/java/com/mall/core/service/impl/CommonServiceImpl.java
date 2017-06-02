@@ -8,11 +8,14 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Service
 public abstract class CommonServiceImpl<M extends BaseModel> {
 
     public final Log logger = LogFactory.getLog(getClass());
@@ -143,6 +146,7 @@ public abstract class CommonServiceImpl<M extends BaseModel> {
 
     // U
     // 更新方法捕捉异常，打出日志后，抛出RuntimeException以便上层事务回滚
+    @Transactional
     public void updateById(String id, M model) {
         try {
             M dbModel = readById(id);
