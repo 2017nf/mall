@@ -62,6 +62,18 @@
         limit 1;
     </select>
 
+    <update id="updateById">
+        UPDATE <include refid="table"/>
+        <set>
+            <if test="model.name != null">name= #{model.name},</if>
+            <if test="model.icon != null">icon= #{model.icon},</if>
+            <if test="model.rank != null">rank= #{model.rank},</if>
+            <if test="model.updateTime != null">updateTime= #{model.updateTime},</if>
+            <if test="model.status != null">status= #{model.status},</if>
+            <if test="model.remark != null">remark= #{model.remark},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
 
     <update id="deleteById">
         update

@@ -21,7 +21,7 @@ public class CrossFilter extends OncePerRequestFilter {
         response.addHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
         response.addHeader("Access-Control-Max-Age", "1728000");
         response.addHeader("Access-Control-Allow-Credentials", "true");
-        response.addHeader("Access-Control-Allow-Headers", " Origin, No-Cache, X-Requested-With,Cache-Control, Expires, Content-Type,token,Content-Disposition,Pragma");
+        response.addHeader("Access-Control-Allow-Headers", " Origin, No-Cache, X-Requested-With,Cache-Control, Expires, Content-Type,token,Content-Disposition,Pragma,token");
         response.setCharacterEncoding("UTF-8");
         filterChain.doFilter(request, response);
     }
