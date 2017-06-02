@@ -100,6 +100,9 @@ public class GoodsController extends BaseController<MallGoods>{
         if (org.apache.commons.lang3.StringUtils.isBlank(model.getSortId())) {
             return new JsonResult(6, "请选择商品类别");
         }
+        if(model.getDetail() == ""){
+            model.setDetail(null);
+        }
 
         MallGoods goods = new MallGoods();
         BeanUtils.copyProperties(goods, model);
@@ -145,6 +148,9 @@ public class GoodsController extends BaseController<MallGoods>{
         }
         if("".equalsIgnoreCase(model.getIcon())){
             model.setIcon(null);
+        }
+        if(model.getDetail() == ""){
+            model.setDetail(null);
         }
 
         MallGoods editGoods = new MallGoods();
