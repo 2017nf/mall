@@ -6,7 +6,7 @@ package com.mall.constant;
  */
 public enum PayType {
 
-	ALIPAY(1, "直接购买"),
+	ALIPAY(1, "支付宝支付"),
 
 	WEIXINPAY(2, "微信支付"),
 

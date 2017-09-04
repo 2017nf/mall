@@ -1,5 +1,7 @@
 package com.mall.controller;
 
+import com.mall.common.Token;
+import com.mall.constant.ResultCode;
 import com.mall.constant.StatusType;
 import com.mall.core.page.JsonResult;
 import com.mall.core.page.Page;
@@ -8,6 +10,7 @@ import com.mall.model.MallGoods;
 import com.mall.model.MallSort;
 import com.mall.service.MallGoodsService;
 import com.mall.service.MallSortService;
+import com.mall.util.TokenUtil;
 import com.mall.vo.GoodsVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
@@ -100,6 +103,9 @@ public class GoodsController extends BaseController<MallGoods>{
         if (org.apache.commons.lang3.StringUtils.isBlank(model.getSortId())) {
             return new JsonResult(6, "请选择商品类别");
         }
+        if(model.getDetail() == ""){
+            model.setDetail(null);
+        }
 
         MallGoods goods = new MallGoods();
         BeanUtils.copyProperties(goods, model);
@@ -142,6 +148,12 @@ public class GoodsController extends BaseController<MallGoods>{
 
         if (model.getStock() != null && model.getStock() < 1) {
             return new JsonResult(6, "商品库存不能小于1件");
+        }
+        if("".equalsIgnoreCase(model.getIcon())){
+            model.setIcon(null);
+        }
+        if(model.getDetail() == ""){
+            model.setDetail(null);
         }
 
         MallGoods editGoods = new MallGoods();
@@ -188,5 +200,40 @@ public class GoodsController extends BaseController<MallGoods>{
         }
         goodsService.batchDel(list);
         return new JsonResult();
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/addsort",method ={RequestMethod.OPTIONS,RequestMethod.POST} )
+    public JsonResult addGoodsSort(HttpServletRequest request,MallSort sort){
+        Token token = TokenUtil.getSessionUser(request);
+        if (StringUtils.isEmpty(sort.getName())){
+            return  new JsonResult(-1,"分类名称不能为空");
+        }
+        if (sort.getRank()==null){
+            return  new JsonResult(-1,"排序不能为空");
+        }
+        if (StringUtils.isEmpty(sort.getIcon())){
+            return  new JsonResult(-1,"分类logo不能为空");
+        }
+        sort.setStatus(1);
+        goodsSortService.create(sort);
+        return new JsonResult(ResultCode.SUCCESS.getCode(),"添加成功");
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/delsort",method ={RequestMethod.OPTIONS,RequestMethod.POST} )
+    public JsonResult delGoodsSort(HttpServletRequest request,MallSort sort){
+        Token token = TokenUtil.getSessionUser(request);
+        if (StringUtils.isEmpty(sort.getId())){
+            return  new JsonResult(-1,"分类ID不能为空");
+        }
+
+        MallSort model = goodsSortService.readById(sort.getId());
+        if (model==null){
+            return  new JsonResult(-1,"查无此分类");
+        }
+        sort.setStatus(0);
+        goodsSortService.updateById(model.getId(),sort);
+        return new JsonResult(ResultCode.SUCCESS.getCode(),"删除 成功");
     }
 }

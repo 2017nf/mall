@@ -4,6 +4,8 @@ import com.mall.constant.OrderStatus;
 import com.mall.constant.OrderType;
 import com.mall.constant.RecordType;
 import com.mall.core.dao.CommonDao;
+import com.mall.core.page.Page;
+import com.mall.core.page.PageResult;
 import com.mall.core.service.impl.CommonServiceImpl;
 import com.mall.mapper.MallOrderMapper;
 import com.mall.model.*;
@@ -14,6 +16,8 @@ import com.mall.util.PoundageUtil;
 import com.mall.util.UUIDUtil;
 import com.mall.vo.CartVo;
 import com.mall.vo.OrderPurchaseVo;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -156,5 +161,28 @@ public class MallOrderServiceImpl extends CommonServiceImpl<MallOrder> implement
 		}
 		return mallOrderMapper.getByOrderNo(orderNo, userId);
 	}
+
+	/**
+	 * 分页获取订单列表
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public PageResult<MallOrder> getPage(MallOrder model, Page page) throws Exception {
+		PageResult<MallOrder> pageResult = new PageResult<MallOrder>();
+		BeanUtils.copyProperties(pageResult, page);
+		Integer count = mallOrderMapper.readCount(model);
+		pageResult.setTotalSize(count);
+		if (count != null && count > 0) {
+			List<MallOrder> list = mallOrderMapper.readList(model,page.getStartRow(),page.getPageSize());
+			if (CollectionUtils.isEmpty(list)) {
+				list= Collections.EMPTY_LIST;
+			}
+			pageResult.setRows(list);
+		}
+		return pageResult;
+	}
+
 
 }

@@ -12,4 +12,5 @@
 	<url>/manage/goods/sortlist</url>
 	<url>/manage/goods/batchDel</url>
 	<url>/manage/login/loginIn</url>
+	<url>/manage/upload/getToken</url>
 </no_authorized>

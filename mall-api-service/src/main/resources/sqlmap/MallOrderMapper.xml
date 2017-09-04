@@ -34,23 +34,22 @@
 				 #{icon},  #{price}, #{expressNo}, #{expressName}, #{userName}, #{phone}, #{addr},
 				 #{createTime}, #{updateTime}, #{status}, #{remark}, #{num}, #{payWay})
     </insert> 
-    <!---->
-    <!--<update id="update">-->
-        <!--UPDATE <include refid="table"/>-->
-        <!--<set>-->
-        	<!--<if test="model.expressNo != null">expressNo= #{model.expressNo},</if>-->
-        	<!--<if test="model.expressName != null">expressName= #{model.expressName},</if>-->
-        	<!--<if test="model.userName != null">userName= #{model.userName},</if>-->
-        	<!--<if test="model.phone != null">phone= #{model.phone},</if>-->
-        	<!--<if test="model.addr != null">addr= #{model.addr},</if>-->
-        	<!--<if test="model.updateTime != null">updateTime= #{model.updateTime},</if>-->
-            <!--<if test="model.status != null">status= #{model.status},</if>-->
-            <!--<if test="model.remark != null">remark= #{model.remark},</if>-->
-            <!--<if test="model.remark != null">shareUserId= #{model.shareUserId},</if>-->
-            <!--<if test="model.remark != null">payWay= #{model.payWay}</if>-->
-        <!--</set>-->
-		<!--WHERE id = #{id}-->
-    <!--</update>-->
+
+    <update id="updateById">
+        UPDATE <include refid="table"/>
+        <set>
+        	<if test="model.expressNo != null">expressNo= #{model.expressNo},</if>
+        	<if test="model.expressName != null">expressName= #{model.expressName},</if>
+        	<if test="model.userName != null">userName= #{model.userName},</if>
+        	<if test="model.phone != null">phone= #{model.phone},</if>
+        	<if test="model.addr != null">addr= #{model.addr},</if>
+        	<if test="model.updateTime != null">updateTime= #{model.updateTime},</if>
+            <if test="model.status != null">status= #{model.status},</if>
+            <if test="model.remark != null">remark= #{model.remark},</if>
+            <if test="model.payWay != null">payWay= #{model.payWay}</if>
+        </set>
+		WHERE id = #{id}
+    </update>
 
 
     <select id="readById" resultType="com.mall.model.MallOrder">
