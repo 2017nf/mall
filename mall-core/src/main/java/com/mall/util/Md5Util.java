@@ -61,4 +61,8 @@ public class Md5Util {
 		return hs.toString().toUpperCase();
 	}
 
+	public static void main(String[] args) {
+		System.out.println(Md5Util.MD5Encode("123456","2016"));
+
+	}
 }
